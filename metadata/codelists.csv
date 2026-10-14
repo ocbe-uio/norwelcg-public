@@ -1,0 +1,121 @@
+# codelists.csv — English labels for the coded (Norwegian) category values of
+# the export, applied when the ADaM datasets are built (decode_cat() in
+# R/helpers/codelists.R). One row per variable x code.
+#
+# `variable` is the BASE variable name: the twin-2 columns (tv2_*) use the same
+# codelist as the first baby, and the shared codelists are
+#   samvalg_agreement      the shared decision-making agreement items (*_enig)
+#   stotteperson_column    companionship checkbox columns (the code is the suffix)
+#   fosterovervaking_column fetal-monitoring checkbox columns (suffix)
+#   royk_snus              smoking / snuff frequency items
+#
+# Translations are to be validated by the investigators
+# (docs/sap/questions_PI_DM.md, PI 13).
+variable,code,label_en
+forlosningsmetode,spontan_vaginal_fodsel,Spontaneous vaginal delivery
+forlosningsmetode,tang,Forceps delivery
+forlosningsmetode,vakuum,Vacuum delivery
+forlosningsmetode,akutt_sectio,Intrapartum caesarean section
+robson_gruppe,robsongruppe_1,Robson group 1
+robson_gruppe,robsongruppe_2a,Robson group 2a
+robson_gruppe,robsongruppe_3,Robson group 3
+robson_gruppe,robsongruppe_4a,Robson group 4a
+robson_gruppe,robsongruppe_5,Robson group 5
+robson_gruppe,robsongruppe_6,Robson group 6
+robson_gruppe,robsongruppe_7,Robson group 7
+robson_gruppe,robsongruppe_8,Robson group 8
+robson_gruppe,robsongruppe_10,Robson group 10
+paritet,p0,Nulliparous
+paritet,p1,Para 1
+paritet,p2_pluss,Para 2 or more
+sivilstatus,gift,Married
+sivilstatus,samboer,Cohabiting
+sivilstatus,ugift_enslig,Single
+sivilstatus,annet,Other
+utdanning,grunnskole,Primary school
+utdanning,videregaende,Upper secondary school
+utdanning,hoyere_utdanning,University or college
+innleggelsesarsak,rier,Contractions
+innleggelsesarsak,induksjon,Induction of labour
+innleggelsesarsak,vannavgang,Rupture of membranes
+innleggelsesarsak,vannavgang_og_rier,Rupture of membranes and contractions
+innleggelsesarsak,annet,Other
+barnets_kjonn,gutt,Boy
+barnets_kjonn,jente,Girl
+barnets_kjonn,vet_ikke,Unknown
+fotal_fodselspresentasjon,bakhode,Occiput (vertex)
+fotal_fodselspresentasjon,forhode,Sinciput
+fotal_fodselspresentasjon,panne,Brow
+fotal_fodselspresentasjon,ansikt,Face
+fotal_fodselspresentasjon,sete,Breech
+fotal_fodselsposisjon,occiput_anterior,Occiput anterior
+fotal_fodselsposisjon,occiput_posterior,Occiput posterior
+fotal_fodselsposisjon,tverrstand,Occiput transverse
+hovedarsak_operativ_forlosning,fotalt_distress,Fetal distress
+hovedarsak_operativ_forlosning,langsom_fremgang,Prolonged labour
+hovedarsak_operativ_forlosning,mislykket_induksjon,Failed induction
+hovedarsak_operativ_forlosning,mislykket_tang_vakuum,Failed forceps or vacuum
+hovedarsak_operativ_forlosning,sete,Breech presentation
+hovedarsak_operativ_forlosning,hensyn_mor,Maternal indication
+hovedarsak_operativ_forlosning,annet,Other
+niva_ledende_del_akutt_sectio,over_spina,Above the ischial spines
+niva_ledende_del_akutt_sectio,ved_spina,At the ischial spines
+niva_ledende_del_akutt_sectio,under_spina,Below the ischial spines
+type_perineal_stotteteknikk,ritgens_modifisert_ritgens,Ritgen or modified Ritgen manoeuvre
+type_perineal_stotteteknikk,stottende_handgrep_flat_hand,Supporting flat-hand grip
+hovedarsak_amniotomi,ingen_darlige_rier,No or poor contractions
+hovedarsak_amniotomi,skalp,Fetal scalp electrode or sampling
+hovedarsak_amniotomi,tiltakslinje_krysset_forste_stadium,"Action line crossed, first stage (WHO partograph)"
+hovedarsak_amniotomi,tidsint_overskredet_forste_stadium,"Time interval exceeded, first stage (LCG)"
+hovedarsak_amniotomi,tidsint_overskredet_andre_stadium,"Time interval exceeded, second stage (LCG)"
+hovedarsak_amniotomi,avd_tidsgrenser_overskredet_andre_stadium,"Ward time limits exceeded, second stage"
+hovedarsak_amniotomi,annet,Other
+hovedarsak_oxytocin_infusjon,ingen_darlige_rier_annet,No or poor contractions / other
+hovedarsak_oxytocin_infusjon,tiltakslinje_krysset_forste_stadium,"Action line crossed, first stage (WHO partograph)"
+hovedarsak_oxytocin_infusjon,tidsintervall_overskredet_forste_stadium,"Time interval exceeded, first stage (LCG)"
+hovedarsak_oxytocin_infusjon,tidsintervall_overskredet_andre_stadium,"Time interval exceeded, second stage (LCG)"
+hovedarsak_oxytocin_infusjon,avd_tidsgrenser_overskredet_andre_stadium,"Ward time limits exceeded, second stage"
+hovedarsak_innleggelse_NFI,respirasjonsproblemer,Respiratory problems
+hovedarsak_innleggelse_NFI,prematuritet,Prematurity
+hovedarsak_innleggelse_NFI,mistanke_om_fotal_asfyksi,Suspected fetal asphyxia
+hovedarsak_innleggelse_NFI,infeksjon,Infection
+hovedarsak_innleggelse_NFI,hypoglykemi,Hypoglycaemia
+hovedarsak_innleggelse_NFI,annet,Other
+farge_fostervann_fodsel,normalt,Clear
+farge_fostervann_fodsel,misfarget,Meconium-stained
+farge_fostervann_fodsel,sterkt_misfarget,Heavily meconium-stained
+farge_fostervann_fodsel,annet,Other
+fodestilling,ryggleie_halvt_sittende,Supine or semi-sitting
+fodestilling,sideleie,Lateral
+fodestilling,knestaende,Kneeling
+fodestilling,staende,Standing
+fodestilling,operasjonsbord,Operating table
+ernaring_utreise,morsmelk,Breast milk
+ernaring_utreise,morsmelkerstatning,Formula
+ernaring_utreise,kombinasjon_morsmelk_morsmelkerstatning,Breast milk and formula
+ammer_utreise,0,Not breastfeeding
+ammer_utreise,fullammer,Exclusive breastfeeding
+ammer_utreise,delammer,Partial breastfeeding
+hvis_oxytocin_andre_stadium_hvilken_fase,ved_nedtrengning,"Passive second stage, descending" 
+hvis_oxytocin_andre_stadium_hvilken_fase,ved_trykking,"Active second stage, pushing" 
+velg_base_excess_eller_base_deficit,base_excess,Base excess
+velg_base_excess_eller_base_deficit,base_deficit,Base deficit
+royk_snus,0,No
+royk_snus,av_og_til,Occasionally
+royk_snus,daglig,Daily
+samvalg_agreement,0,No
+samvalg_agreement,1,Yes
+samvalg_agreement,ikke_spurt,Not asked
+samvalg_agreement,ikke_svart,No answer
+stotteperson_column,partner,Partner
+stotteperson_column,flerkulturell_doula,Multicultural doula
+stotteperson_column,doula,Doula
+stotteperson_column,familie,Family
+stotteperson_column,venn,Friend
+stotteperson_column,ingen,Nobody
+stotteperson_column,onsker_ikke,Did not want a companion
+fosterovervaking_column,intermitterende,Intermittent monitoring
+fosterovervaking_column,kontinuerlig_ekstern_CTG,Continuous external CTG
+fosterovervaking_column,stan_kontinuerlig_intern_CTG,STAN or continuous internal CTG
+fosterovervaking_column,skalpprove_laktat,Fetal scalp lactate sampling
+fosterovervaking_column,ingen,No fetal monitoring

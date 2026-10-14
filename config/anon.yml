@@ -1,0 +1,302 @@
+# =========================================================
+# anon.yml — configuration for the flat-file anonymiser (R/make_anon/).
+#
+# The NorWel raw data is one flat Stata (.dta) table per study period
+# (intervention / transition / control), one row per participant (NOT a Viedoc
+# multi-form export). This config drives make_anon() to produce a
+# copy that is anonymised *relative to the development environment*
+# (see docs/data_anonymisation_specification.md), for code development in an
+# LLM-accessible environment. Run make_anon() in the SAFE environment only.
+#
+# Method (agreed with the study statistician):
+#   * drop   : record-metadata columns are removed outright.
+#   * timing : true timestamps are kept as datetimes but every timestamp of a
+#              row is shifted by ONE random whole-day offset drawn for that row
+#              (intervals, time-of-day and weekday preserved; true calendar date
+#              hidden). The per-row offsets are the re-identification key and are
+#              written ONLY to a safe-only path, never exported.
+#   * blocks : every non-timing column is permuted across rows (marginals kept,
+#              individual linkage broken). Permutation is BLOCK-CONSISTENT: the
+#              columns of a `group` move together as a unit, so a gate travels
+#              with its conditional children (no impossible combinations such as
+#              amniotomi = 0 with cervix_apning_amniotomi filled). Groups in the
+#              same `joint` set share one permutation order (e.g. amniotomi and
+#              oxytocin, to preserve their correlation). Any column not listed in
+#              `drop`, `timing`, or a `group` is permuted on its own.
+#
+# Token grammar used throughout (matched against a column's Stata name OR its
+# variable label; labels carry the full dotted names that Stata truncated/renamed
+# to v8, v9, ...):
+#   "name"        exact match on name, label, or the 32-char truncated name
+#   "prefix.*"    all columns whose label starts with  prefix + "."   (checkbox
+#                 multi-selects, e.g. "stotteperson.*")
+#   "prefix*"     all columns whose name starts with   prefix         (e.g. the
+#                 twin-2 block "tv2_*")
+# =========================================================
+
+anon:
+  seed: 20240601                    # reproducible anonymisation
+
+  # --- columns dropped outright -----------------------------------------
+  drop:
+    - created                       # record-creation timestamp (str35 + tz)
+    - answer_time_ms                # form-response paradata, non-analytic
+    - nokkel                        # real record key: rebuilt below as a
+                                    # synthetic key, but ALSO listed here so an
+                                    # older make_anon() without synthetic_ids
+                                    # support drops it instead of permuting the
+                                    # real values (deviation D-2)
+    - swap                          # legacy variable, not used (DMs, 2026-09-11)
+
+  # --- synthetic keys ------------------------------------------------------
+  # The real record key `nokkel` (20260909 export) encodes the TRUE period in its
+  # prefix (CTR/INT/TRAN) and may link to the EDC record. It is removed before
+  # permutation and rebuilt afterwards as a synthetic key in the same format:
+  # prefix from the (random) period label in `treatment`, numbers 1..n in random
+  # order within each prefix; nothing derived from the real key, no map kept.
+  # Code using `nokkel` (USUBJID, prefix-vs-period checks) thus runs unchanged
+  # in both environments; in the anon copy the prefix agrees with the sham
+  # period, not the true one.
+  synthetic_ids:
+    nokkel:
+      from: treatment
+      prefix: {intervention: INT, transition: TRAN, control: CTR}
+      width: 5
+
+  # --- timing: per-row whole-day offset, bounded to the trial window -----
+  # Reference timestamp(s), in priority order: the first present value on a row
+  # anchors that row's offset. The cleaned delivery time comes first — it is
+  # never missing, has no sentinel years, and is the date that defines
+  # inclusion (every delivery lies inside the window; 34 admissions do not).
+  anchor:
+    # - nyfodselstidspunkt   # not in the final export (20261001): removed on the
+    #                         # safe side 2026-10-01, mirrored here (item 59)
+    - fodselstidspunkt
+    - tidspunkt_innleggelse
+  # The per-row offset is drawn so every SHIFTED anchor date stays within the
+  # trial window below (SAP: inclusion 01.04.2025-26.05.2026), spanning all
+  # periods so the period cannot be reconstructed from the date. The window MUST
+  # be explicit: the raw data contains sentinel/erroneous timestamps (e.g. year
+  # 999) that would wreck an observed min/max window. Rows whose anchor is
+  # outside the window are parked on a random in-window date; rows with no
+  # anchor at all still get a random offset.
+  # EVERY date-time column must be listed under `timing` (or `drop`):
+  # make_anon stops on any other, so a timestamp can never be permuted with its
+  # true calendar value.
+  # max_shift_days optionally caps the magnitude (null = window bound only).
+  window: ["2025-04-01", "2026-05-26"]
+  max_shift_days: null
+  timing:
+    - tidspunkt_innleggelse
+    - kvinnens_opplevelse_latensfasens_start
+    - tidspunkt_oppstart_induksjon
+    - tidspunkt_vannavgang
+    - cx_1cm
+    - cx_2cm
+    - cx_3cm
+    - cx_4cm
+    - cx_5cm
+    - cx_6cm
+    - cx_7cm
+    - cx_8cm
+    - cx_9cm
+    - cx_10cm
+    - tidspunkt_start_eda
+    - start_trykketid
+    - fodselstidspunkt
+    - tv2_tidspunkt_vannavgang
+    - tv2_start_trykketid
+    - tv2_fodselstidspunkt
+    # cleaned timestamps added by the data managers (20260909 export; typed
+    # Stata datetimes, not str16 strings)
+    - nytidinnleggelse
+    - nylatensfasens
+    - nytidinduksjon
+    - nytidvannavgang
+    - nytideda
+    - nystart_trykketid
+    - nyfodselstidspunkt
+
+  # Reconcile a row-fixed timing column with its (permuted) gate: where the gate
+  # is 0/missing after permutation, blank the timing value so the flag and the
+  # timestamp never contradict. (The reverse — gate = 1 with a missing timestamp
+  # — also occurs in the real data and is left as-is.)
+  timing_gates:
+    tidspunkt_oppstart_induksjon: induksjon
+    tidspunkt_start_eda: medikamentell_smertelindring
+    nytidinduksjon: induksjon
+    nytideda: medikamentell_smertelindring
+
+  # --- block-consistent permutation groups ------------------------------
+  # Each group's columns are permuted together as one unit across rows. A gate
+  # listed with its children keeps them mutually consistent.
+  groups:
+    pregravide_sykdommer:
+      - kjente_pregravide_sykdommer
+      - "hvilke_kjente_pregravide_sykdommer.*"
+    svangerskaps_sykdommer:
+      - svangerskapsrelaterte_sykdommer
+      - "hvilke_svangerskapsrelaterte_sykdommer.*"
+    stotteperson:
+      - "stotteperson.*"
+    induksjon:
+      - induksjon
+      - cx_ved_induksjon
+      - "Induksjonsmetoder.*"
+    oxytocin:
+      - oxytocin_infusjon
+      - cx_oppstart_oxytocin_infusjon
+      - hvis_oxytocin_andre_stadium_hvilken_fase
+      - hovedarsak_oxytocin_infusjon
+      - max_dose_oxytocin_infusjon
+      - total_ml_oxytocin_infusjon
+    amniotomi:
+      - amniotomi
+      - cervix_apning_amniotomi
+      - hovedarsak_amniotomi
+    jordmor_tilstede:
+      - "jordmor_kontinuerlig_tilstede_cm.*"
+    nfi:
+      - overflyttet_NFI_innen_to_timer
+      - hovedarsak_innleggelse_NFI
+    royk:
+      - royk_for_eller_i_sv_s
+      - royk_for_graviditet
+      - royk_1_trimester
+      - royk_3_trimester
+    snus:
+      - snus_for_eller_i_sv_s
+      - snus_for_graviditet
+      - snus_1_trimester
+      - snus_3_trimester
+    gestasjonsalder:
+      - gestasjonsalder_ved_fodsel_hele_uker
+      - gestasjonsalder_ved_fodsel_pluss_dager
+    ikke_med_smerte:
+      - ikke_medikamentell_smertelindring
+      - "type_ikke_medikamentell_smertelindring.*"
+    med_smerte:
+      - medikamentell_smertelindring
+      - "type_medikamentell_smertelindring.*"
+      - cx_start_eda
+    perineal_stotte:
+      - perineal_stotteteknikk
+      - type_perineal_stotteteknikk
+    perinealrift:
+      - perinealrift
+      - "perinealrift_grad.*"
+    fosterovervaking:
+      - "fosterovervaking.*"
+    forlosning:
+      - forlosningsmetode
+      - hovedarsak_operativ_forlosning
+      - cx_akutt_sectio
+      - niva_ledende_del_akutt_sectio
+    apgar:
+      - apgar_skar_1min
+      - apgar_skar_5min
+      - apgar_skar_10min
+    cordgas:
+      - velg_base_excess_eller_base_deficit
+      - ph_arterie
+      - ph_vene
+      - base_excess_arterie
+      - base_excess_vene
+      - base_deficit_arterie
+      - base_deficit_vene
+    ammer_ernaring:
+      - ammer_utreise
+      - ernaring_utreise
+    samvalg_smertelindring:
+      - samvalg_involvert_smertelindringsmetode
+      - samvalg_enig_smertelindringsmetode
+    samvalg_plan_langsom:
+      - samvalg_plan_langsom_fremgang
+      - samvalg_involvert_plan_langsom_fremgang
+      - samvalg_dokumentert_plan_langsom_fremgang
+      - samvalg_enig_plan_langsom_fremgang
+    samvalg_ekstern_ctg:
+      - samvalg_ekstern_CTG_tiltaket_utfort
+      - samvalg_ekstern_CTG_informert
+      - samvalg_ekstern_CTG_enig
+    samvalg_intern_ctg_stan:
+      - samvalg_intern_CTG_STAN_tiltaket_utfort
+      - samvalg_intern_CTG_STAN_informert
+      - samvalg_intern_CTG_STAN_enig
+    samvalg_vag_und_jm:
+      - samvalg_vag_und_jm
+      - samvalg_vag_und_jm_informert
+      - samvalg_vag_und_jm_enig
+    samvalg_vag_und_ny_jm:
+      - samvalg_vag_und_ny_jm
+      - samvalg_vag_und_ny_jm_informert
+      - samvalg_vag_und_ny_jm_enig
+    samvalg_vag_und_lege:
+      - samvalg_vag_und_lege
+      - samvalg_vag_und_lege_informert
+      - samvalg_vag_und_lege_enig
+    samvalg_amniotomi:
+      - samvalg_amniotomi_tiltaket_utfort
+      - samvalg_amniotomi_informert
+      - samvalg_amniotomi_enig
+    samvalg_oxytocin_stim:
+      - samvalg_oxytocin_stimulering_tiltaket_utfort
+      - samvalg_oxytocin_stimulering_informert
+      - samvalg_oxytocin_stimulering_enig
+    samvalg_episiotomi:
+      - samvalg_episiotomi_tiltaket_utfort
+      - samvalg_episiotomi_informert
+      - samvalg_episiotomi_enig
+    samvalg_operativ:
+      - samvalg_operativ_forlosning_tiltaket_utfort
+      - samvalg_operativ_forlosning_informert
+      - samvalg_operativ_forlosning_enig
+    samvalg_oxytocin_im_pp:
+      - samvalg_oxytocin_im_pp_tiltaket_utfort
+      - samvalg_oxytocin_im_pp_informert
+      - samvalg_oxytocin_im_pp_enig
+    samvalg_k_vit_im:
+      - samvalg_k_vit_im_tiltaket_utfort
+      - samvalg_k_vit_im_informert
+      - samvalg_k_vit_im_enig
+    # twin-2 record: one block, permuted only among rows that actually have a
+    # second twin, so twin prevalence and the twin-2 record stay coherent. The
+    # tv2 timing columns are handled by the timing shift (row-fixed) and are
+    # excluded from this block automatically.
+    tv2:
+      restrict_to: tv2_fodselstidspunkt   # permute within rows where present
+      members:
+        - "tv2_*"
+
+  # --- groups that must share one permutation order ----------------------
+  # Preserves the cross-group correlation the statistician flagged.
+  joint:
+    - [amniotomi, oxytocin]
+    # perineal outcomes are defined for vaginal deliveries only: keep them with
+    # the delivery mode so the anon copy shows the true missingness structure
+    # (review item 10) and no CS row carries a tear.
+    - [forlosning, perineal_stotte, perinealrift]
+
+  # --- multi-file harmonisation (read_norwel_raw) ------------------------
+  # The per-period raw files (intervention, transition, control) are aligned by
+  # variable LABEL before row-binding. `harmonize` unifies cosmetically
+  # different labels for the same variable across files: canonical ->
+  # [variant, ...], matched on the part before the first "." (so the whole
+  # checkbox family is remapped).
+  harmonize:
+    Induksjonsmetoder:
+      - Induksjonsmetode
+
+  # `treatment` (the study period: intervention / transition / control) is added
+  # by read_norwel_raw with the TRUE allocation in the safe environment;
+  # make_anon permutes it like any other column, so the anonymised copy carries
+  # a RANDOM period label (marginal period sizes preserved). Nothing to
+  # configure here — it becomes a permuted singleton. Period-specific columns
+  # (samvalg_*, stotteperson.*, tidsintervall_LCG_* in the intervention file;
+  # tiltakslinjen_*, avdelingens_*, the extra jordmor band in the control AND
+  # transition files) are NA in the periods that lack them and are permuted
+  # across the POOLED rows, which is what breaks the "has samvalg data =>
+  # intervention period" link.
+
+  # --- re-identification risk readout (optional, needs sdcMicro) ----------
+  risk_readout: true

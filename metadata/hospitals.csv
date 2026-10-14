@@ -1,0 +1,17 @@
+# Hospitals (clusters) of NORWELCG. Source: docs/protocol/NORWELCG-randomisation.pdf
+# (2025-01-17): randomised cluster number, FHI births and CS %, strata.
+# TRANS_STEP / LCG_STEP = PLANNED crossover schedule (SAP Figure 1: cluster c in
+# transition in step c+1, LCG from step c+2). Replace with the actual crossover
+# once the PIs confirm the dates (questions_PI_DM.md, PI 1).
+# SITEID = the `fodested` value in the export.
+SITEID,HOSPNAME,HOSPNO,CLUSTER,BIRTHS,CSPCT,BIRTHSTR,CSSTR,STRATUM,TRANS_STEP,LCG_STEP
+Haukeland,Haukeland University Hospital (Bergen),2,1,4243,8.8,High,Low,3,2,3
+St_Olav,St. Olav University Hospital,9,2,3580,11.7,High,Low,3,3,4
+Sykehuset_ostfold,Østfold Hospital Trust,7,3,2942,13.1,High,High,1,4,5
+Drammen,Vestre Viken Hospital Trust: Drammen,8,4,1752,12.3,Low,Low,4,5,6
+Tromso,University Hospital of North Norway (Tromsø),10,5,1243,13.4,Low,High,2,6,7
+Rikshospitalet,Oslo University Hospital: Rikshospitalet,4,6,2268,12.3,Low,High,2,7,8
+Kristiansand,Sørlandet Hospital: Kristiansand,3,7,1796,8.6,Low,Low,4,8,9
+Ahus,Akershus University Hospital,1,8,4818,13.4,High,High,1,9,10
+Ulleval,Oslo University Hospital: Ullevål,5,9,5659,10.5,High,Low,3,10,11
+Stavanger,Stavanger University Hospital,6,10,3945,11.9,High,Low,3,11,12

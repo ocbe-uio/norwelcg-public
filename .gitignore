@@ -1,0 +1,36 @@
+# R / project
+.Rproj.user
+.Rhistory
+.RData
+.Rprofile.local
+.DS_Store
+.vscode
+
+# targets store (rebuildable)
+_targets/
+
+# renv library (restored from lockfile)
+renv/library/
+renv/staging/
+
+# raw data — never commit patient data
+data/raw/*
+!data/raw/.gitignore
+!data/raw/README.md
+
+# derived analysis datasets (rebuildable via targets)
+data/ad/
+data/rd/
+
+# rendered reports (rebuildable via targets)
+reports/*.html
+reports/*.pdf
+reports/*_files/
+
+# analysis outputs (rebuildable; on the safe side they contain record keys)
+outputs/
+
+~$*
+
+# publisher full texts of the SAP references (copyright; local only)
+docs/sap/refs/

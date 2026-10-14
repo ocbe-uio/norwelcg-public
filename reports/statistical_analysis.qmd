@@ -1,0 +1,412 @@
+---
+title: "NORWELCG — Statistical Analysis Report (MOCK-UP)"
+subtitle: "WHO Labour Care Guide vs WHO partograph — stepped-wedge cluster-randomised trial"
+date: last-modified
+format:
+  html:
+    embed-resources: true
+    toc: true
+    toc-depth: 2
+    df-print: kable
+  pdf:
+    toc: true
+    toc-depth: 2
+    fig-pos: "H"
+    include-in-header:
+      text: |
+        \usepackage{pdflscape}
+        \usepackage{adjustbox}
+execute:
+  echo: false
+  warning: false
+---
+
+```{r setup}
+#| include: false
+library(targets)
+library(dplyr)
+library(knitr)
+library(ggplot2)
+store <- here::here("_targets")
+
+cfg    <- tar_read(cfg,    store = store)
+adsl   <- tar_read(adsl,   store = store)
+rdeff  <- tar_read(rdeff,  store = store)
+rdmi   <- tar_read(rdmi,   store = store)
+rdtte  <- tar_read(rdtte,  store = store)
+rdsub  <- tar_read(rdsub,  store = store)
+rddsc  <- tar_read(rddsc,  store = store)
+
+mode_sham <- !identical(cfg$mode, "true")
+
+fmt_pct <- function(n, pct) ifelse(is.na(pct), as.character(n),
+                                   sprintf("%d (%.1f%%)", n, pct))
+fmt_ci  <- function(est, lcl, ucl, d = 2)
+  ifelse(is.na(est), "",
+         sprintf(paste0("%.", d, "f (%.", d, "f, %.", d, "f)"), est, lcl, ucl))
+fmt_p   <- function(p) ifelse(is.na(p), "", format.pval(p, digits = 3, eps = 1e-4))
+fmt_yn  <- function(x) ifelse(is.na(x), "", ifelse(x, "yes", "no"))
+# fixed-sequence NI/superiority conclusion as one label (SAP 2.1-2.2):
+# superiority is only claimed once non-inferiority is shown
+fmt_concl <- function(ni_concl, sup_concl) dplyr::case_when(
+  is.na(ni_concl)      ~ "",
+  ni_concl & sup_concl ~ "Non-inferior, superior",
+  ni_concl             ~ "Non-inferior",
+  .default             = "Not concluded"
+)
+fmt_p2 <- function(p_ni, p_sup) {
+  a <- fmt_p(p_ni); b <- fmt_p(p_sup)
+  ifelse(a == "" & b == "", "", paste0(a, ifelse(b == "", "", paste0("; ", b))))
+}
+# a model-convergence note, dropped when it is only the expected "singular
+# fit" (the anon copy has cluster SD ~ 0 by construction, item 42) so a
+# genuine warning on real data still surfaces
+fmt_note <- function(note) ifelse(is.na(note) | note %in% c("", "singular fit"), "", note)
+# adds a Note column only when something beyond the expected singular fit
+# needs flagging, so the column disappears from a fully-clean table
+maybe_note <- function(df, note_raw) {
+  ns <- fmt_note(note_raw)
+  if (any(nzchar(ns))) dplyr::mutate(df, Note = ns) else df
+}
+# reference / intervention arm labels (reference = first TRT01P level):
+# "WHO partograph" and "LCG" throughout (cfg$arms)
+arms <- levels(adsl$TRT01P)
+# study period (FORMPER / PERIODC values) as shown in the tables
+per_lab <- c(setNames(vapply(cfg$arms, `[[`, "", "arm"), vapply(cfg$arms, `[[`, "", "raw")),
+             transition = "Transition")
+per_order <- unname(per_lab[c("control", "transition", "intervention")])
+# column headers naming the arms
+ev_nm  <- sprintf("Events (%s / %s)", arms[1], arms[2])
+rk_ref <- paste("Risk,", arms[1]); rk_int <- paste("Risk,", arms[2])
+margin_pp <- 100 * cfg$analysis$ni_margin
+k0 <- cfg$analysis$tte$origin_cm
+H  <- cfg$analysis$tte$horizon
+
+# a kable that never overflows the page width in the PDF: a native LaTeX
+# table (so short numeric columns are not force-wrapped mid-digit by
+# pandoc's proportional column widths, SAP report review 2026-09-15), scaled
+# down only if it would still be wider than the page; landscape = TRUE turns
+# the (portrait) page it lands on sideways first, for the widest tables.
+# Built as a single raw-latex block so it cannot straddle Quarto's own
+# per-chunk div wrapping. HTML is unchanged.
+rkable <- function(df, ..., landscape = FALSE) {
+  if (!knitr::is_latex_output()) return(knitr::kable(df, ...))
+  tab <- knitr::kable(df, format = "latex", booktabs = TRUE, linesep = "", ...)
+  body <- paste0("\\begin{adjustbox}{max width=\\linewidth}\n", tab, "\n\\end{adjustbox}\n")
+  if (landscape) body <- paste0("\\begin{landscape}\n", body, "\\end{landscape}\n")
+  knitr::asis_output(body)
+}
+```
+
+```{r banner}
+#| output: asis
+if (mode_sham) cat(
+  "::: {.callout-warning title=\"MOCK-UP — sham data\"}\n",
+  "This report is built in `sham` mode on the **anonymised** export ",
+  "(`", cfg$export, "_anon`). The study period (record-key prefix), hospital, ",
+  "time of birth and outcomes are permuted or shifted independently, so every ",
+  "treatment effect below is noise **by construction**. The mock-up ",
+  "validates the code and layout, not the estimates. Single-variable rates ",
+  "and within-woman labour timings are real.\n",
+  ":::\n", sep = "")
+```
+
+# Introduction
+
+NORWELCG is a stepped-wedge cluster-randomised non-inferiority trial of the WHO
+Labour Care Guide (LCG) versus the WHO partograph in `r cfg$sw$n_steps` steps of
+`r cfg$sw$step_weeks` weeks across `r dplyr::n_distinct(adsl$SITEID)` Norwegian
+delivery units, inclusion `r cfg$sw$start` to `r cfg$sw$end` (by time of birth).
+The primary endpoint is intrapartum caesarean section; the LCG is non-inferior
+if the upper limit of the 95% confidence interval for the risk difference
+(LCG − WHO partograph) lies below +`r margin_pp` percentage points, and
+superior if it also lies below 0 (SAP §2.1).
+
+All binary endpoints are analysed with a binomial GLMM (logit link, random
+cluster intercept, fixed effects for treatment, time interval and the SAP §4.1.3
+covariates — Robson group, maternal age, pre-pregnancy BMI, height, birth weight,
+gestational age); risks and differences are population-averaged by
+G-computation integrating over the random cluster effect, with delta-method
+standard errors. The study period is given by the eCRF (the prefix of the
+record key: CTR, TRAN, INT), which each hospital changed at its crossover date
+in the randomised schedule; the transition periods are excluded
+from the primary analysis set (PAS). The time interval is the 5-week step of
+the time of birth, steps starting at 08:00. The primary endpoint counts all
+caesarean sections from 4 cm in both periods; amniotomy, oxytocin and epidural
+are counted whatever the cervical dilatation.
+
+All analyses follow the final signed version of the statistical analysis plan
+v1.0 of 14 October 2026.
+
+# Analysis sets
+
+```{r popflow}
+adsl |>
+  summarise(
+    `FAS` = n(),
+    `PAS` = sum(PASFL == "Y"),
+    `VDS` = sum(VDSFL == "Y"),
+    .by = FORMPER
+  ) |>
+  mutate(FORMPER = factor(per_lab[FORMPER], per_order)) |>
+  arrange(FORMPER) |>
+  rename(`Study period` = FORMPER) |>
+  rkable()
+```
+
+Births by stepped-wedge time interval and study period:
+
+```{r stepperiod}
+adsl |>
+  mutate(FORMPER = factor(per_lab[FORMPER], per_order)) |>
+  count(STEPN, FORMPER) |>
+  tidyr::pivot_wider(names_from = FORMPER, values_from = n, values_fill = 0) |>
+  rename(`Time interval` = STEPN) |>
+  rkable()
+```
+
+Period by the randomised schedule (hospital × step of birth) versus the period
+of the eCRF, which defines the treatment (blinded-review check;
+on real data the two agree apart from women in labour at a change of period):
+
+```{r formcheck}
+adsl |>
+  count(`Scheduled period` = factor(per_lab[PERIODC], per_order),
+        `eCRF period` = factor(per_lab[FORMPER], per_order)) |>
+  tidyr::pivot_wider(names_from = `eCRF period`, values_from = n, values_fill = 0) |>
+  rkable()
+```
+
+# Baseline characteristics (PAS)
+
+```{r basecat}
+rddsc$baseline_cat |>
+  mutate(label = ifelse(duplicated(label), "", label)) |>
+  transmute(Characteristic = label, Category = category,
+            !!arms[1] := fmt_pct(n_ref, pct_ref),
+            !!arms[2] := fmt_pct(n_int, pct_int)) |>
+  rkable()
+```
+
+```{r basecont}
+rddsc$baseline_cont |>
+  transmute(Characteristic = label, Treatment = TRT01P, N = n,
+            `Mean (SD)` = sprintf("%.1f (%.1f)", mean, sd),
+            `Median [Q1, Q3]` = sprintf("%.1f [%.1f, %.1f]", median, q1, q3),
+            Missing = n_miss) |>
+  rkable()
+```
+
+# Primary analysis — intrapartum caesarean section
+
+Primary: PAS, all caesarean sections from 4 cm in both periods. Sensitivity
+analyses keep the estimand; supplementary analyses change one attribute (SAP
+§4.1.4–4.1.5): SUPP1 counts the transition periods as WHO partograph, SUPP2 lets
+the effect depend on the time since the LCG was taken into use.
+
+```{r primary}
+d_primary <- rdeff |> filter(PARAMCD == "ICS")
+d_primary |>
+  transmute(
+    Analysis = analysis, Population = population,
+    Contrast = contrast, N = n,
+    !!ev_nm := sprintf("%d / %d", ev_ref, ev_int),
+    !!rk_ref := sprintf("%.3f", risk_ref),
+    !!rk_int := sprintf("%.3f", risk_int),
+    `RD, pp (95% CI)` = fmt_ci(100 * rd, 100 * rd_lcl, 100 * rd_ucl),
+    `RR (95% CI)` = fmt_ci(rr, rr_lcl, rr_ucl),
+    `p (NI; superiority)` = fmt_p2(p_ni, p_sup),
+    Conclusion = fmt_concl(ni_concl, sup_concl)
+  ) |>
+  maybe_note(d_primary$note) |>
+  rkable(landscape = TRUE)
+```
+
+# Secondary endpoints — dichotomous
+
+Complete case unless stated; cord pH by multiple imputation. PAS, except
+episiotomy and OASIS (grade 3a–3c or 4) in the vaginal delivery set (VDS).
+Amniotomy, oxytocin and epidural are counted whatever the cervical dilatation.
+
+All models are the binomial GLMM of the Introduction; "MI" marks the
+multiply-imputed endpoint (cord pH).
+
+```{r secondary}
+d_sec <- bind_rows(rdeff |> filter(analysis == "SECONDARY"),
+                   rdmi  |> filter(analysis == "SECONDARY"))
+d_sec |>
+  transmute(
+    Endpoint = PARAM, Population = population,
+    MI = ifelse(grepl("MI \\(", model), sub(".*(MI \\(m = [0-9]+\\)).*", "\\1", model), ""),
+    N = n,
+    `Not recorded` = ifelse(is.na(n_miss), "", format(n_miss, big.mark = ",")),
+    !!ev_nm := sprintf("%s / %s", round(ev_ref), round(ev_int)),
+    !!rk_ref := sprintf("%.3f", risk_ref),
+    !!rk_int := sprintf("%.3f", risk_int),
+    `RD, pp (95% CI)` = fmt_ci(100 * rd, 100 * rd_lcl, 100 * rd_ucl),
+    `RR (95% CI)` = fmt_ci(rr, rr_lcl, rr_ucl)
+  ) |>
+  maybe_note(d_sec$note) |>
+  rkable(landscape = TRUE)
+```
+
+# Time from `r k0` cm to vaginal delivery
+
+Restricted mean time without vaginal delivery during the first `r H` hours
+after `r k0` cm: Y = min(T, `r H` h) after a vaginal delivery and `r H` h after
+a caesarean section (composite strategy; PAS). Linear mixed model (random cluster, time interval, covariates);
+the time of reaching `r k0` cm is multiply imputed from the labour-curve model
+where no examination found `r k0` cm, and the estimates are combined by Rubin's
+rules. Negative differences favour the LCG.
+
+```{r tte}
+tr <- rdtte$results
+tr |>
+  mutate(fmt = ifelse(unit == "proportion", 100, 1)) |>
+  transmute(
+    Measure = measure, Analysis = analysis, Set = population,
+    !!arms[1] := sprintf(ifelse(unit == "proportion", "%.3f", "%.2f"), est_ref),
+    !!arms[2] := sprintf(ifelse(unit == "proportion", "%.3f", "%.2f"), est_int),
+    `Difference (95% CI)` = paste0(fmt_ci(fmt * estimate, fmt * lcl, fmt * ucl),
+                                   ifelse(unit == "proportion", " pp", " h"))
+  ) |>
+  maybe_note(tr$note) |>
+  rkable(landscape = TRUE)
+```
+
+N = `r tr$n[1]` (vaginal deliveries `r tr$n_vd[1]`; time of reaching `r k0` cm
+imputed for `r tr$n_t0_imputed[1]`; m = `r tr$m[1]` imputed datasets). SENS2
+uses heteroscedasticity-consistent (HC3) standard errors; the components and the
+supportive analyses are presented alongside, not as separate treatment effects.
+
+Cumulative incidence of vaginal delivery by hours since `r k0` cm: the empirical
+proportion delivered vaginally (no censoring), evaluated each minute and
+averaged over the imputed datasets; descriptive, not adjusted for time interval.
+The plateau is the proportion delivered vaginally:
+
+```{r cif}
+#| fig-width: 7
+#| fig-height: 4
+#| fig-alt: "Cumulative proportion of women delivered vaginally (y) by hours since 4 cm cervical dilatation (x), one step curve per treatment."
+series <- setNames(c("#2a78d6", "#eb6834"), arms)
+surface <- "#fcfcfb"
+ggplot(rdtte$cif, aes(hours, cif, colour = TRT01P)) +
+  geom_step(linewidth = 0.6) +
+  scale_colour_manual(values = series, name = NULL) +
+  scale_x_continuous(paste0("Hours since ", k0, " cm"), breaks = seq(0, H, 6)) +
+  scale_y_continuous("Delivered vaginally", labels = scales::percent,
+                     limits = c(0, 1)) +
+  theme_minimal(base_size = 11) +
+  theme(plot.background = element_rect(fill = surface, colour = NA),
+        panel.grid.minor = element_blank(),
+        panel.grid.major = element_line(colour = "#e1e0d9", linewidth = 0.3),
+        axis.text = element_text(colour = "#52514e"),
+        axis.title = element_text(colour = "#52514e"),
+        legend.text = element_text(colour = "#0b0b0b"),
+        legend.position = "top", legend.justification = "left")
+```
+
+Observed times (descriptive), women with an examination at `r k0` cm who
+delivered vaginally — no imputation:
+
+```{r t0obs}
+rddsc$t0obs |>
+  transmute(Treatment = TRT01P, N = n,
+            `Median [Q1, Q3], h` = sprintf("%.2f [%.2f, %.2f]", median, q1, q3),
+            `90th pct, h` = sprintf("%.2f", p90)) |>
+  rkable()
+```
+
+# Supplementary analyses of secondary endpoints
+
+Composite strategy for the vaginal-birth endpoints (episiotomy, OASIS):
+caesarean section counted as no event, PAS.
+
+```{r supplementary}
+bind_rows(rdeff |> filter(analysis == "SUPPLEMENTARY"),
+          rdmi  |> filter(analysis == "SUPPLEMENTARY")) |>
+  transmute(
+    Endpoint = PARAM, Population = population, N = n,
+    !!rk_ref := sprintf("%.3f", risk_ref),
+    !!rk_int := sprintf("%.3f", risk_int),
+    `RD, pp (95% CI)` = fmt_ci(100 * rd, 100 * rd_lcl, 100 * rd_ucl),
+    `RR (95% CI)` = fmt_ci(rr, rr_lcl, rr_ucl)
+  ) |>
+  rkable()
+```
+
+# Subgroup analysis — Robson group
+
+Exploratory (SAP §8.2): the primary model with a treatment × Robson group
+interaction, risk difference within each group by G-computation; groups with
+fewer than `r rdsub$min_events[1]` intrapartum caesarean sections (pooled) are
+combined. Likelihood-ratio test of the interaction:
+p = `r fmt_p(rdsub$p_interaction[1])`. Not adjusted for multiplicity; no
+non-inferiority conclusion within subgroups.
+
+```{r subgroup}
+rdsub |>
+  transmute(
+    `Robson group` = group, N = n,
+    !!ev_nm := sprintf("%d / %d", ev_ref, ev_int),
+    !!rk_ref := ifelse(is.na(risk_ref), "", sprintf("%.3f", risk_ref)),
+    !!rk_int := ifelse(is.na(risk_int), "", sprintf("%.3f", risk_int)),
+    `RD, pp (95% CI)` = fmt_ci(100 * rd, 100 * rd_lcl, 100 * rd_ucl)
+  ) |>
+  maybe_note(rdsub$note) |>
+  rkable()
+```
+
+`r if (any(nzchar(rdsub$groups_combined))) paste0("Combined: ", rdsub$groups_combined[nzchar(rdsub$groups_combined)], ".") else ""`
+
+# Descriptive endpoints (PAS)
+
+Presented descriptively; no models are fitted. Each endpoint among the women it
+applies to: the caesarean sections for the CS characteristics (the second twin's
+for a CS of the second twin only); the women with continuous monitoring for its
+type. Shared decision making for operative delivery is recorded on the LCG form
+only and is shown for the LCG period; the follow-up items among the women whose
+gate question was yes.
+
+```{r descriptive}
+#| output: asis
+desc <- rddsc$endpoints
+lcg_only <- "SHARED DECISION MAKING"
+for (grp in unique(desc$PARCAT2)) {
+  cat("\n## ", tools::toTitleCase(tolower(grp)), "\n\n", sep = "")
+  tab <- desc |>
+    filter(PARCAT2 == grp) |>
+    mutate(PARAM = ifelse(duplicated(PARAM), "", PARAM)) |>
+    transmute(Endpoint = PARAM, Category = category,
+              !!arms[1] := fmt_pct(n_ref, pct_ref),
+              !!arms[2] := fmt_pct(n_int, pct_int))
+  if (grp %in% lcg_only) tab <- tab[, names(tab) != arms[1]]
+  cat(rkable(tab), sep = "\n")
+  cat("\n")
+}
+```
+
+## Numeric endpoints and auxiliaries
+
+Cord gases, Apgar scores and estimated blood loss (primary analysis set).
+
+```{r numdesc}
+rddsc$numeric |>
+  mutate(PARAM = ifelse(duplicated(PARAM), "", PARAM)) |>
+  transmute(Variable = PARAM, Treatment = TRT01P, N = n, Missing = n_miss,
+            `Mean (SD)` = sprintf("%.2f (%.2f)", mean, sd),
+            `Median [Q1, Q3]` = sprintf("%.2f [%.2f, %.2f]", median, q1, q3)) |>
+  rkable()
+```
+
+## Cervical examinations
+
+Hours from each examination to delivery by the dilatation found (examinations
+with 0–72 h to delivery).
+
+```{r exams}
+rddsc$exams |>
+  transmute(`Dilatation (cm)` = CMN, Treatment = TRT01P, Examinations = n, Women = women,
+            `Median [Q1, Q3], h` = sprintf("%.2f [%.2f, %.2f]", median, q1, q3)) |>
+  rkable()
+```

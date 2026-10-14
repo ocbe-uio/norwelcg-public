@@ -1,0 +1,107 @@
+# =========================================================
+# cfg.yml — top-level trial configuration
+# Copy this template per trial and edit the values below.
+# =========================================================
+
+studyid: "NORWELCG"        # short study identifier, e.g. "ImPRESS"
+country: "Norway"
+country_code: "NOR"        # ISO3 country code
+
+# --- run mode -------------------------------------------------------------
+# sham : analyses run on sham/simulated randomisation (development, mock-up)
+# true : analyses run on the true randomisation (only after database lock)
+mode: "sham"               # options: sham | true
+shamseed: 42424            # seed for sham randomisation (ignored when mode: true)
+
+# --- data export ----------------------------------------------------------
+export: "20261001" # raw export stem under data/raw/ (final export)
+                    # sham mode reads data/raw/<export>_anon/<export>_anon.rds
+# true mode (safe env only) reads the per-period raw .dta files. The KEYS are
+# the study-period labels written into `treatment` by read_norwel_raw(); the
+# transition file (5-week teaching step) has the same structure as the control
+# file. The analysis period is the prefix of the record key `nokkel` (CTR /
+# TRAN / INT), which matches the source file (SAP v0.83 §3, review item 62).
+raw_files:
+  intervention: "data/raw/norwel_intervention.dta"
+  transition:   "data/raw/norwel_transition.dta"
+  control:      "data/raw/norwel_control.dta"
+
+# --- design: stepped-wedge cluster RCT (LCG vs WHO partograph) -------------
+# `raw` maps the raw `treatment` column values onto the arm codes.
+arms:
+  - armcd: "CTR"
+    arm: "WHO partograph"
+    raw: "control"
+  - armcd: "INT"
+    arm: "LCG"
+    raw: "intervention"
+ref_arm: "CTR"             # reference/comparator arm for contrasts
+
+# Stepped-wedge calendar (SAP Figure 1): inclusion 01.04.2025-26.05.2026,
+# 12 steps of 5 weeks; time interval (step) is a fixed effect in all models.
+sw:
+  start: "2025-04-01"      # first day of step 1
+  end: "2026-05-26"        # last day of inclusion (births on this day: step 12)
+  step_weeks: 5
+  n_steps: 12
+  step_start_time: "08:00" # steps (and the periods in the data) change at 08:00
+                           # local time (investigators, 2026-09-29)
+
+# Hospitals (clusters): randomised cluster number, strata, annual births and
+# the crossover schedule (transition / LCG step). The schedule was followed
+# (PI 1, 2026-09-29); the treatment comes from the record key, the schedule is
+# used for the exposure step and the blinded form-vs-schedule check.
+hospitals_file: "metadata/hospitals.csv"
+
+# English labels for the coded category values of the export, applied when the
+# ADaM datasets are built (validated by the investigators, PI 13).
+codelists_file: "metadata/codelists.csv"
+# Lookups for the baseline table and the descriptive endpoints (items 58, 64, 65)
+continent_file: "metadata/country_continent.csv"     # country -> continent (UN M49)
+bwref_file: "metadata/bw_reference_skjaerven2000.csv" # birthweight-for-GA standard
+sdm_items_file: "metadata/sdm_items.csv"             # SDM / companionship items
+
+analysis:
+  popfl: "PASFL"           # ADaM population flag for the primary analysis set
+                           # (PAS = FAS minus transition periods, SAP 3)
+  ni_margin: 0.015         # non-inferiority margin, absolute risk difference
+                           # LCG - WHO (SAP 2.1: +1.5 pp)
+  covariates:              # SAP 4.1.3 (decided 2026-09-11, review item 34)
+    categorical: [ROBSON]  # "(missing)" level for missing values
+    continuous: [AGE, BMIPREG, HEIGHT, BWT, GA]   # RCS, 3 knots (10/50/90th
+                           # pct); median + missing indicator if missing
+    min_indicator: 10      # a missing indicator only where at least this many
+                           # values are missing (SAP 4.1.3); below it the
+                           # median alone (such an indicator is not estimable)
+  gh_nodes: 15             # Gauss-Hermite nodes: G-computation over the
+                           # random cluster effect (SAP 4.1.2)
+  mi:                      # multiple imputation (SAP 5.1.1.4)
+    seed: 20260911
+    maxit: 10
+    m_cordph: 30           # arterial cord pH < 7.00
+    m_t0: 30               # time of reaching the time origin (SAP 5.1.1.5)
+  tte:                     # time from 4 cm to vaginal delivery (SAP 5.1.1.5)
+    origin_cm: 4           # time zero: reaching 4 cm cervical dilatation
+    horizon: 36            # restricted mean horizon (hours after 4 cm)
+    supp_horizons: [24, 48]    # supplementary horizons (SAP 5.1.1.7)
+    supportive_hours: [6, 12]  # vaginal delivery within h hours (supportive)
+    cif_step_min: 1        # grid (minutes) of the descriptive cumulative incidence
+                           # (step function; item 65(h))
+  subgroup:                # Robson subgroup analysis of the primary (SAP 8.2)
+    min_events: 50         # groups with fewer intrapartum CS (pooled) combined
+
+# --- optional metadata-driven SDTM/ADaM ----------------------------------
+# Set use_specs: true to drive SDTM/ADaM from metadata/specs.xlsx via metacore.
+# Leave false for the lighter sdtm.oak + admiral flow.
+specs:
+  use_specs: false
+  path: "metadata/specs.xlsx"
+
+# --- project paths (used by the path_* helpers in R/external/functions.R) --
+paths:
+  raw: "data/raw"
+  adam: "data/ad"
+  rd: "data/rd"
+  reports: "reports"
+  outputs: "outputs"
+  metadata: "metadata"

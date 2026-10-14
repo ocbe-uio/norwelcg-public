@@ -1,0 +1,18 @@
+{
+  "title": "NORWELCG: statistical analysis plan and analysis code (pre-unblinding snapshot)",
+  "upload_type": "software",
+  "version": "pre-unblinding",
+  "description": "<p>Pre-unblinding snapshot of the statistical analysis plan (SAP v1.0, signed 14 October 2026), the analysis code, the SAP–data–code review log and the anonymisation documentation of NORWELCG, the Norwegian WHO Labour Care Trial (stepped-wedge cluster-randomised trial of the WHO Labour Care Guide versus the WHO partograph; ClinicalTrials.gov NCT05791630). The snapshot was made after database lock and before unblinding. It contains no participant data. Code: MIT licence; documents: CC BY 4.0.</p>",
+  "creators": [
+    {"name": "Olsen, Inge Christoffer", "affiliation": "Oslo University Hospital", "orcid": "0000-0001-6889-5873"},
+    {"name": "Dalbye, Inger Sofia Rebecka", "affiliation": "Østfold Hospital Trust; Oslo Metropolitan University"},
+    {"name": "Bernitz, Stine", "affiliation": "Østfold Hospital Trust; Oslo Metropolitan University"},
+    {"name": "Buerengen, Therese", "affiliation": "Oslo Metropolitan University"},
+    {"name": "Stivang, Maria Cecilie", "affiliation": "Oslo Metropolitan University"}
+  ],
+  "license": "MIT",
+  "keywords": ["stepped-wedge cluster randomised trial", "WHO Labour Care Guide", "partograph", "statistical analysis plan", "non-inferiority", "estimands"],
+  "related_identifiers": [
+    {"identifier": "https://clinicaltrials.gov/study/NCT05791630", "relation": "isSupplementTo", "resource_type": "other"}
+  ]
+}

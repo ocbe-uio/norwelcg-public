@@ -1,0 +1,153 @@
+# Country of origin (landbakgrunn) -> continent, for the baseline table (SAP 12.2;
+# review item 58). Continents by the UN M49 standard regions (Europe, Asia, Africa,
+# Americas, Oceania); transcontinental countries as in M49: Turkiye, Cyprus,
+# Georgia, Armenia, Azerbaijan, Kazakhstan -> Asia; Russia -> Europe; Egypt -> Africa.
+code,country_en,continent
+Afghanistan,Afghanistan,Asia
+Albania,Albania,Europe
+Algerie,Algeria,Africa
+Angola,Angola,Africa
+Argentina,Argentina,Americas
+Armenia,Armenia,Asia
+Aserbajdsjan,Azerbaijan,Asia
+Australia,Australia,Oceania
+Bangladesh,Bangladesh,Asia
+Belarus,Belarus,Europe
+Belgia,Belgium,Europe
+Benin,Benin,Africa
+Bolivia,Bolivia,Americas
+Bosnia_Hercegovina,Bosnia and Herzegovina,Europe
+Brasil,Brazil,Americas
+Bulgaria,Bulgaria,Europe
+Burkina_Faso,Burkina Faso,Africa
+Burundi,Burundi,Africa
+Canada,Canada,Americas
+Chile,Chile,Americas
+Colombia,Colombia,Americas
+Costa_Rica,Costa Rica,Americas
+Cuba,Cuba,Americas
+Danmark,Denmark,Europe
+De_forente_arabiske_emirater,United Arab Emirates,Asia
+Den_dominikanske_republikken,Dominican Republic,Americas
+Djibouti,Djibouti,Africa
+Ecuador,Ecuador,Americas
+Egypt,Egypt,Africa
+El_Salvador,El Salvador,Americas
+Elfenbenskysten,Côte d'Ivoire,Africa
+Eritrea,Eritrea,Africa
+Estland,Estonia,Europe
+Etiopia,Ethiopia,Africa
+Filippinene,Philippines,Asia
+Finland,Finland,Europe
+Frankrike,France,Europe
+Gambia,Gambia,Africa
+Georgia,Georgia,Asia
+Ghana,Ghana,Africa
+Grenada,Grenada,Americas
+Guatemala,Guatemala,Americas
+Guinea,Guinea,Africa
+Guinea_Bissau,Guinea-Bissau,Africa
+Hellas,Greece,Europe
+Honduras,Honduras,Americas
+India,India,Asia
+Indonesia,Indonesia,Asia
+Irak,Iraq,Asia
+Iran,Iran,Asia
+Irland,Ireland,Europe
+Island,Iceland,Europe
+Israel,Israel,Asia
+Italia,Italy,Europe
+Jamaica,Jamaica,Americas
+Japan,Japan,Asia
+Jemen,Yemen,Asia
+Jordan,Jordan,Asia
+Kambodsja,Cambodia,Asia
+Kamerun,Cameroon,Africa
+Kapp_Verde,Cabo Verde,Africa
+Kasakhstan,Kazakhstan,Asia
+Kenya,Kenya,Africa
+Kina,China,Asia
+Kirgisistan,Kyrgyzstan,Asia
+Kongo,Congo,Africa
+Kosovo,Kosovo,Europe
+Kroatia,Croatia,Europe
+Kuwait,Kuwait,Asia
+Kypros,Cyprus,Asia
+Laos,Laos,Asia
+Latvia,Latvia,Europe
+Libanon,Lebanon,Asia
+Liberia,Liberia,Africa
+Libya,Libya,Africa
+Litauen,Lithuania,Europe
+Malaysia,Malaysia,Asia
+Malta,Malta,Europe
+Marokko,Morocco,Africa
+Mauritius,Mauritius,Africa
+Mexico,Mexico,Americas
+Mikronesiafoderasjonen,Micronesia (Federated States of),Oceania
+Moldova,Moldova,Europe
+Mongolia,Mongolia,Asia
+Montenegro,Montenegro,Europe
+Mosambik,Mozambique,Africa
+Myanmar,Myanmar,Asia
+Namibia,Namibia,Africa
+Nederland,Netherlands,Europe
+Nepal,Nepal,Asia
+New_Zealand,New Zealand,Oceania
+Nicaragua,Nicaragua,Americas
+Niger,Niger,Africa
+Nigeria,Nigeria,Africa
+Nord_Korea,North Korea,Asia
+Nord_Makedonia,North Macedonia,Europe
+Norge,Norway,Europe
+Oman,Oman,Asia
+Osterrike,Austria,Europe
+Pakistan,Pakistan,Asia
+Palestina,Palestine,Asia
+Panama,Panama,Americas
+Paraguay,Paraguay,Americas
+Peru,Peru,Americas
+Polen,Poland,Europe
+Portugal,Portugal,Europe
+Romania,Romania,Europe
+Russland,Russia,Europe
+Rwanda,Rwanda,Africa
+Saudi_Arabia,Saudi Arabia,Asia
+Senegal,Senegal,Africa
+Serbia,Serbia,Europe
+Sierra_Leone,Sierra Leone,Africa
+Singapore,Singapore,Asia
+Slovakia,Slovakia,Europe
+Slovenia,Slovenia,Europe
+Somalia,Somalia,Africa
+Sor_Afrika,South Africa,Africa
+Sor_Korea,South Korea,Asia
+Sor_Sudan,South Sudan,Africa
+Spania,Spain,Europe
+Sri_Lanka,Sri Lanka,Asia
+Storbritannia,United Kingdom,Europe
+Sudan,Sudan,Africa
+Sveits,Switzerland,Europe
+Sverige,Sweden,Europe
+Syria,Syria,Asia
+Tadsjikistan,Tajikistan,Asia
+Taiwan,Taiwan,Asia
+Tanzania,Tanzania,Africa
+Thailand,Thailand,Asia
+Togo,Togo,Africa
+Trinidad_og_Tobago,Trinidad and Tobago,Americas
+Tsjekkia,Czechia,Europe
+Tunisia,Tunisia,Africa
+Turkmenistan,Turkmenistan,Asia
+Tyrkia,Türkiye,Asia
+Tyskland,Germany,Europe
+Uganda,Uganda,Africa
+Ukraina,Ukraine,Europe
+Ungarn,Hungary,Europe
+Uruguay,Uruguay,Americas
+USA,United States,Americas
+Usbekistan,Uzbekistan,Asia
+Venezuela,Venezuela,Americas
+Vietnam,Viet Nam,Asia
+Zambia,Zambia,Africa
+Zimbabwe,Zimbabwe,Africa

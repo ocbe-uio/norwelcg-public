@@ -1,0 +1,144 @@
+---
+title: "NORWELCG Randomisation"
+author: "Inge Christoffer Olsen"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+
+```
+
+# Introduction
+
+This document describes the randomisation procedure for the NORWELCG study. The randomisation is set up according to the Specification for Randomisation procedure dated 2025-01-17 and according to the latest version of the protocol (version 1.05 dated 2024-05-09). This procedure is set up by the study statistician Inge Christoffer Olsen, and will be executed by an independent statistician at the Clinical Trials Unit of OSlo University Hospital, Erica Ponzi by setting the new seed. 
+
+# Setup
+
+According to the specifications:
+According to numbers gathered by the Norwegian Institution of Public Health, the number of births and caesarean sections (CS) are given as
+
+```{r}
+# A table with the following specification:
+
+# Hospital no	Number of births	Percentage CS
+# 1	4 818	13,4
+# 2	4 243	8,8
+# 3	1 796	8,6
+# 4	2 268	12,3
+# 5	5 659	10,5
+# 6	3 945	11,9
+# 7	2 942	13,1
+# 8	1 752	12,3
+# 9	3 580	11,7
+# 10	1 243	13,4
+
+# The data is then stored in a tibble
+
+births <- c(4818, 4243, 1796, 2268, 5659, 3945, 2942, 1752, 3580, 1243)
+CS <- c(13.4, 8.8, 8.6, 12.3, 10.5, 11.9, 13.1, 12.3, 11.7, 13.4)
+name <- c("Ahus", "Bergen", "KrSand", "RH", "Ullevål", "SUS", "SØ", "Drammen", "StOlav", "Tromsø")
+hospitals <- tibble(Hospital_no = 1:10, hname = name, Births = births, CS = CS)
+
+# Print using kable with the proper headings
+
+knitr::kable(hospitals, col.names = c("Hospital no", "Hospital name", "Number of births", "Percentage CS"))
+
+
+
+ 
+```
+
+
+
+With a cut-off at 2900 for the number of births, and 12.3% for the CSs we get the following strata:
+
+
+```{r}
+
+# Create a tibble with the following specification:
+
+# Hospital	birth_strata	CS_strata	Strata
+# 1	High	High	1
+# 2	High	Low	3
+# 3	Low	Low	4
+# 4	Low	High	2
+# 5	High	Low	3
+# 6	High	Low	3
+# 7	High	High	1
+# 8	Low	Low	4
+# 9	High	Low	3
+# 10	Low	High	2
+# 
+
+birth_strata <- c("High", "High", "Low", "Low", "High", "High", "High", "Low", "High", "Low")
+CS_strata <- c("High", "Low", "Low", "High", "Low", "Low", "High", "Low", "Low", "High")
+strata <- c(1, 3, 4, 2, 3, 3, 1, 4, 3, 2)
+hospital_strata <- tibble(Hospital_no = 1:10, hname = name, birth_strata = birth_strata, CS_strata = CS_strata, strata = strata)
+
+# Print using kable with the proper headings
+
+knitr::kable(hospital_strata, col.names = c("Hospital no", "Hospital name", "Birth strata", "CS strata", "Strata"))
+
+
+```
+
+
+
+The stepped-wedge design is then according to the specification in the protocol:
+
+<!-- Include a figure here -->
+
+```{r, echo = FALSE, out.width="90%"}
+# insert the figure Clusters.png here
+
+knitr::include_graphics("Clusters.png")
+
+
+
+```
+
+
+The randomisation will then be performed as follows to ensure stratification by size and CS-rate:
+
+1)	Cluster 3 and 8 will be randomly assigned from strata 1 (hospital 1 or 7)
+2)	Cluster 4 and 7 will be randomly assigned from strata 4 (hospital 3 or 8)
+3)	Cluster 1, 2, 9 and 10 will be randomly assigned from strata 3 (hospital 2, 5, 6 or 9)
+4)	Cluster 5 and 6 will be randomly assigned from strata 2 (hospital 4 or 10)
+
+This randomisation scheme will assure that there is good spread of the starting times according to important characteristics of the hospitals. 
+
+
+# Randomisation
+```{r, echo = FALSE}
+seed <- randomNumbers(1, 1, 100000000, 1) %>% 
+  as.numeric()
+time <- Sys.time()
+```
+
+
+Following these specifications, the randomisation using seed `r seed`, retrieved from random.org at time `r time` produces the following randomisation:
+
+```{r}
+library(tidyverse)
+set.seed(seed)
+randomisation <- hospital_strata %>% 
+  arrange(strata) %>%
+  mutate(cluster = c(3, 8, 5, 6, 1, 2, 9, 10, 4, 7)) %>% 
+  group_by(strata) %>%
+  mutate(Randomisation = sample(cluster)) %>% 
+  arrange(Hospital_no) %>% 
+  left_join(hospitals, hname, by = c("Hospital_no", "hname")) %>% 
+  select(Randomisation, Hospital_no, hname, Births, CS, birth_strata, CS_strata, strata) %>% 
+  arrange(Randomisation)
+  
+ 
+# Print using kable with the proper headings
+
+knitr::kable(randomisation, col.names = c("Cluster", "Hospital no", "Hospital name", "Birth rate", "CS rate", "Birth strata", "CS strata", "Strata"))
+
+```
+
+

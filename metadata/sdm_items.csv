@@ -1,0 +1,54 @@
+# Shared decision making (samvalg_*) and labour companionship (stotteperson_*) items,
+# recorded on the LCG form only (SAP 5.1.1.3, 12.2; review item 65(d)). One source for the
+# report labels and the SAP table. gate = the item is asked only when the gate is yes
+# (descriptive denominator). source: the intervention-period web form of 2025-03-09
+# (docs/protocol), or constructed by analogy where that version lacks the item.
+variable,domain,item_en,item_no,responses,gate,source
+samvalg_stilling_apningsfasen,Positions,Were positions during the first stage decided in consultation with the woman?,Ble stillinger i åpningsfasen besluttet i samråd med kvinnen?,yes/no,,CRF 2025-03-09
+samvalg_fodestilling,Positions,Was the birthing position decided in consultation with the woman?,Ble fødestilling besluttet i samråd med kvinnen?,yes/no,,CRF 2025-03-09
+samvalg_involvert_smertelindringsmetode,Pain relief,If pain relief: was the woman involved in the choice of pain relief method?,Hvis smertelindring - ble kvinnen involvert i valget av smertelindringsmetode,yes/no,,CRF 2025-03-09
+samvalg_enig_smertelindringsmetode,Pain relief,If pain relief: did she agree with the chosen pain relief method?,Hvis smertelindring - var hun enig i valgt smertelindringsmetode,yes/no/not asked/no answer,,CRF 2025-03-09
+samvalg_plan_langsom_fremgang,Plan for prolonged labour,If prolonged labour: was a plan established for managing it?,"Hvis langsom fremgang, ble det lagt en plan for oppfølging av langsom fremgang",yes/no,,CRF 2025-03-09
+samvalg_involvert_plan_langsom_fremgang,Plan for prolonged labour,If prolonged labour: was the woman involved in the discussion about the plan?,"Hvis langsom fremgang, ble kvinnen involvert i diskusjonen om planen",yes/no,samvalg_plan_langsom_fremgang,CRF 2025-03-09
+samvalg_dokumentert_plan_langsom_fremgang,Plan for prolonged labour,If prolonged labour: was the plan documented continuously?,"Hvis langsom fremgang, ble planen dokumentert fortløpende",yes/no,samvalg_plan_langsom_fremgang,CRF 2025-03-09
+samvalg_enig_plan_langsom_fremgang,Plan for prolonged labour,If prolonged labour: did the woman agree with the chosen plan?,"Hvis langsom fremgang, var kvinnen enig i valgt plan",yes/no/not asked/no answer,samvalg_plan_langsom_fremgang,CRF 2025-03-09
+samvalg_ekstern_ctg_tiltaket_utfort,Interventions,External CTG: was the intervention performed?,Ekstern CTG,yes/no,,constructed by analogy — to verify (PI 14)
+samvalg_ekstern_ctg_informert,Interventions,External CTG: was the woman informed?,Hvis ekstern CTG - ble kvinnen informert om tiltaket,yes/no,samvalg_ekstern_ctg_tiltaket_utfort,constructed by analogy — to verify (PI 14)
+samvalg_ekstern_ctg_enig,Interventions,External CTG: did she agree?,Hvis ekstern CTG - var hun enig i tiltaket,yes/no/not asked/no answer,samvalg_ekstern_ctg_tiltaket_utfort,constructed by analogy — to verify (PI 14)
+samvalg_intern_ctg_stan_tiltaket_utfort,Interventions,STAN or continuous internal CTG: was the intervention performed?,STAN/kontinuerlig intern CTG,yes/no,,constructed by analogy — to verify (PI 14)
+samvalg_intern_ctg_stan_informert,Interventions,STAN or continuous internal CTG: was the woman informed?,Hvis STAN/kontinuerlig intern CTG - ble kvinnen informert om tiltaket,yes/no,samvalg_intern_ctg_stan_tiltaket_utfort,constructed by analogy — to verify (PI 14)
+samvalg_intern_ctg_stan_enig,Interventions,STAN or continuous internal CTG: did she agree?,Hvis STAN/kontinuerlig intern CTG - var hun enig i tiltaket,yes/no/not asked/no answer,samvalg_intern_ctg_stan_tiltaket_utfort,constructed by analogy — to verify (PI 14)
+samvalg_vag_und_jm,Interventions,Vaginal examination by the midwife: was the intervention performed?,Vag.us jordmor,yes/no,,CRF 2025-03-09
+samvalg_vag_und_jm_informert,Interventions,Vaginal examination by the midwife: was the woman informed?,Hvis vag.us jordmor - ble kvinnen informert om tiltaket,yes/no,samvalg_vag_und_jm,CRF 2025-03-09
+samvalg_vag_und_jm_enig,Interventions,Vaginal examination by the midwife: did she agree?,Hvis vag.us jordmor - var hun enig i tiltaket,yes/no/not asked/no answer,samvalg_vag_und_jm,CRF 2025-03-09
+samvalg_vag_und_ny_jm,Interventions,Vaginal examination by a new midwife: was the intervention performed?,Vag.us ny jordmor,yes/no,,CRF 2025-03-09
+samvalg_vag_und_ny_jm_informert,Interventions,Vaginal examination by a new midwife: was the woman informed?,Hvis vag.us ny jordmor - ble kvinnen informert om tiltaket,yes/no,samvalg_vag_und_ny_jm,CRF 2025-03-09
+samvalg_vag_und_ny_jm_enig,Interventions,Vaginal examination by a new midwife: did she agree?,Hvis vag.us ny jordmor - var hun enig i tiltaket,yes/no/not asked/no answer,samvalg_vag_und_ny_jm,CRF 2025-03-09
+samvalg_vag_und_lege,Interventions,Vaginal examination by a doctor: was the intervention performed?,Vag.us lege,yes/no,,CRF 2025-03-09
+samvalg_vag_und_lege_informert,Interventions,Vaginal examination by a doctor: was the woman informed?,Hvis vag.us lege - ble kvinnen informert om tiltaket,yes/no,samvalg_vag_und_lege,CRF 2025-03-09
+samvalg_vag_und_lege_enig,Interventions,Vaginal examination by a doctor: did she agree?,Hvis vag.us lege - var hun enig i tiltaket,yes/no/not asked/no answer,samvalg_vag_und_lege,CRF 2025-03-09
+samvalg_amniotomi_tiltaket_utfort,Interventions,Amniotomy: was the intervention performed?,Amniotomi,yes/no,,constructed by analogy — to verify (PI 14)
+samvalg_amniotomi_informert,Interventions,Amniotomy: was the woman informed?,Hvis amniotomi - ble kvinnen informert om tiltaket,yes/no,samvalg_amniotomi_tiltaket_utfort,constructed by analogy — to verify (PI 14)
+samvalg_amniotomi_enig,Interventions,Amniotomy: did she agree?,Hvis amniotomi - var hun enig i tiltaket,yes/no/not asked/no answer,samvalg_amniotomi_tiltaket_utfort,constructed by analogy — to verify (PI 14)
+samvalg_oxytocin_stimulering_tiltaket_utfort,Interventions,Oxytocin stimulation: was the intervention performed?,Oxytocin-stimulering,yes/no,,constructed by analogy — to verify (PI 14)
+samvalg_oxytocin_stimulering_informert,Interventions,Oxytocin stimulation: was the woman informed?,Hvis oxytocin-stimulering - ble kvinnen informert om tiltaket,yes/no,samvalg_oxytocin_stimulering_tiltaket_utfort,constructed by analogy — to verify (PI 14)
+samvalg_oxytocin_stimulering_enig,Interventions,Oxytocin stimulation: did she agree?,Hvis oxytocin-stimulering - var hun enig i tiltaket,yes/no/not asked/no answer,samvalg_oxytocin_stimulering_tiltaket_utfort,constructed by analogy — to verify (PI 14)
+samvalg_episiotomi_tiltaket_utfort,Interventions,Episiotomy: was the intervention performed?,Episiotomi,yes/no,,constructed by analogy — to verify (PI 14)
+samvalg_episiotomi_informert,Interventions,Episiotomy: was the woman informed?,Hvis episiotomi - ble kvinnen informert om tiltaket,yes/no,samvalg_episiotomi_tiltaket_utfort,CRF 2025-03-09
+samvalg_episiotomi_enig,Interventions,Episiotomy: did she agree?,Hvis episiotomi - var hun enig i tiltaket,yes/no/not asked/no answer,samvalg_episiotomi_tiltaket_utfort,CRF 2025-03-09
+samvalg_operativ_forlosning_tiltaket_utfort,Interventions,Operative delivery: was the intervention performed?,Operativ forløsning,yes/no,,constructed by analogy — to verify (PI 14)
+samvalg_operativ_forlosning_informert,Interventions,Operative delivery: was the woman informed?,Hvis operativ forløsning - ble kvinnen informert om tiltaket,yes/no,samvalg_operativ_forlosning_tiltaket_utfort,CRF 2025-03-09
+samvalg_operativ_forlosning_enig,Interventions,Operative delivery: did she agree?,Hvis operativ forløsning - var hun enig i tiltaket,yes/no/not asked/no answer,samvalg_operativ_forlosning_tiltaket_utfort,CRF 2025-03-09
+samvalg_oxytocin_im_pp_tiltaket_utfort,Interventions,Oxytocin IM post partum: was the intervention performed?,Oxytocin im. post partum,yes/no,,CRF 2025-03-09
+samvalg_oxytocin_im_pp_informert,Interventions,Oxytocin IM post partum: was the woman informed?,Hvis oxytocin im. post partum - ble kvinnen informert,yes/no,samvalg_oxytocin_im_pp_tiltaket_utfort,CRF 2025-03-09
+samvalg_oxytocin_im_pp_enig,Interventions,Oxytocin IM post partum: did she agree?,Hvis oxytocin im. post partum - var hun enig i tiltaket,yes/no/not asked/no answer,samvalg_oxytocin_im_pp_tiltaket_utfort,CRF 2025-03-09
+samvalg_k_vit_im_tiltaket_utfort,Interventions,Vitamin K IM: was the intervention performed?,K-vit im,yes/no,,CRF 2025-03-09
+samvalg_k_vit_im_informert,Interventions,Vitamin K IM: was the woman informed?,Hvis k-vit im - ble kvinnen informert,yes/no,samvalg_k_vit_im_tiltaket_utfort,CRF 2025-03-09
+samvalg_k_vit_im_enig,Interventions,Vitamin K IM: did she agree?,Hvis k-vit im - var hun enig i tiltaket,yes/no/not asked/no answer,samvalg_k_vit_im_tiltaket_utfort,CRF 2025-03-09
+stotteperson_partner,Labour companionship,Companion: Partner,Hvem har kvinnen med seg som støtteperson: Partner,ticked/not ticked,,CRF 2025-03-09
+stotteperson_flerkulturell_doula,Labour companionship,Companion: Multicultural doula,Hvem har kvinnen med seg som støtteperson: Flerkulturell doula,ticked/not ticked,,constructed by analogy — to verify (PI 14)
+stotteperson_doula,Labour companionship,Companion: Doula,Hvem har kvinnen med seg som støtteperson: Doula,ticked/not ticked,,CRF 2025-03-09
+stotteperson_familie,Labour companionship,Companion: Family,Hvem har kvinnen med seg som støtteperson: Familiemedlem,ticked/not ticked,,CRF 2025-03-09
+stotteperson_venn,Labour companionship,Companion: Friend,Hvem har kvinnen med seg som støtteperson: Venn,ticked/not ticked,,CRF 2025-03-09
+stotteperson_ingen,Labour companionship,Companion: Nobody,Hvem har kvinnen med seg som støtteperson: Ingen,ticked/not ticked,,CRF 2025-03-09
+stotteperson_onsker_ikke,Labour companionship,Companion: Did not want a companion,Hvem har kvinnen med seg som støtteperson: Ønsker ikke,ticked/not ticked,,CRF 2025-03-09

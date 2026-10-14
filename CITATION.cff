@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+message: "If you use this material, please cite it as below."
+title: "NORWELCG: statistical analysis plan and analysis code (pre-unblinding snapshot)"
+version: "pre-unblinding"
+date-released: "2026-10-14"
+type: software
+authors:
+  - family-names: Olsen
+    given-names: Inge Christoffer
+    orcid: "https://orcid.org/0000-0001-6889-5873"
+    affiliation: "Oslo University Hospital"
+  - family-names: Dalbye
+    given-names: Inger Sofia Rebecka
+    affiliation: "Østfold Hospital Trust; Oslo Metropolitan University"
+  - family-names: Bernitz
+    given-names: Stine
+    affiliation: "Østfold Hospital Trust; Oslo Metropolitan University"
+  - family-names: Buerengen
+    given-names: Therese
+    affiliation: "Oslo Metropolitan University"
+  - family-names: Stivang
+    given-names: Maria Cecilie
+    affiliation: "Oslo Metropolitan University"
+license: MIT
+keywords:
+  - stepped-wedge cluster randomised trial
+  - WHO Labour Care Guide
+  - partograph
+  - statistical analysis plan
+  - non-inferiority
+  - estimands
+identifiers:
+  - type: other
+    value: "ClinicalTrials.gov NCT05791630"
+    description: "Trial registration"

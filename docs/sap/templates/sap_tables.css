@@ -1,0 +1,3 @@
+/* SAP html: all grid lines and a bold header row, as in the docx */
+table, table th, table td { border: 1px solid #000 !important; border-collapse: collapse; }
+table th, table thead td { font-weight: bold; }

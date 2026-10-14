@@ -1,0 +1,1853 @@
+---
+pagetitle: "NORWELCG Statistical Analysis Plan"
+sap-version: "0.83"
+sap-date: "29 September 2026"
+lang: en-GB
+format:
+  docx:
+    reference-doc: templates/sap_reference.docx
+    number-sections: true
+    number-depth: 4
+    output-file: "SAP_NORWELCG.docx"
+  html:
+    number-sections: true
+    number-depth: 4
+    toc: true
+    toc-depth: 3
+    embed-resources: true
+    output-file: "SAP_NORWELCG.html"
+execute:
+  echo: false
+  warning: false
+fig-dpi: 300
+---
+
+<!--
+NORWELCG SAP source (from v0.8 on). Converted 2026-09-11 from
+"SAP NORWELCG v0.8 ICO.docx" (kept as the archived Word original): tracked changes
+accepted; reviewer comments kept as COMMENT lines at their anchors; TransCelerate
+TransCelerate template guidance kept only as CPT guidance comments (not rendered).
+Render from docs/sap:  quarto render sap_norwelcg.qmd
+  docx (reference-doc templates/sap_reference.docx) for circulation and signature;
+  html for reading. Bump sap-version / sap-date in the YAML for each new version.
+Gotcha: do not put @fig-/@sec- cross-references inside a grid table whose first
+row is a one-cell title row (e.g. "Estimand to analysis table"): Quarto then drops
+the header row and numbers the title as a level-1 heading, shifting all section
+numbers. Write such mentions as plain text.
+-->
+
+::: {custom-style="Heading 1 (No TOC)"}
+Title Page
+:::
+
+**Protocol Title: The Norwegian WHO Labour Care Trial, a stepped wedge cluster randomised trial**
+
+**Protocol Number: NA**
+
+**Compound Number: NA**
+
+**Short Title: NORWELCG**
+
+**Sponsor Name: Department of Obstetrics and Gynecology, Østfold Hospital Trust,**
+
+**Legal Registered Address: Po.box 300, 1714 Grålum Norway**
+
+**Regulatory Agency Identifier Number(s):**
+
+  ---------------------------------------------------------------------------------------------------
+  **Registry**             **ID**
+  ------------------------ --------------------------------------------------------------------------
+  ClinicalTrials.gov       NCT05791630
+
+  ---------------------------------------------------------------------------------------------------
+
+**SAP Version: {{< meta sap-version >}}, {{< meta sap-date >}}**
+
+{{< pagebreak >}}
+
+::: {custom-style="Heading 3 (No TOC)"}
+Table of Contents
+:::
+
+```{=openxml}
+<w:p><w:r><w:fldChar w:fldCharType="begin" w:dirty="true"/></w:r><w:r><w:instrText xml:space="preserve"> TOC \o "1-3" \h \z \u </w:instrText></w:r><w:r><w:fldChar w:fldCharType="separate"/></w:r><w:r><w:t>Right-click and choose Update Field to build the table of contents.</w:t></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r></w:p>
+```
+
+{{< pagebreak >}}
+
+
+# Version History {#sec-version-history .unnumbered}
+
+<!-- CPT guidance (template text, not part of the SAP):
+This section should include high-level, concise documentation of any changes from previous versions
+of the SAP. Include a sentence at the beginning of this section that references the current version
+of the protocol with the version date.
+
+If this is version 1.0 of the SAP, include the information provided in the example table with only
+the first row completed.
+
+For amendments to the SAP, describe the reason the SAP is amended such as: protocol amendment,
+changes following blinded data review, request from the data monitoring committee, etc. Details on
+the major changes and rationale for these changes for each SAP amendment are included in this
+section. A tabular format like the example table provided below may be used to present this
+information. Additional rows may be added to the table for the SAP amendment to describe the
+changes.
+-->
+
+\<Start of example text\>
+
+This statistical analysis plan (SAP) for Study XXXXXX is based on the protocol dated ddMMMyyyy.
+
++--------------+----------------+------------------+----------------------------------------------+
+| **SAP        | **Date**       | **Change**       | **Rationale**                                |
+| Version**    |                |                  |                                              |
++:============:+================+==================+==============================================+
+| 1.0          |                | Not applicable   | Original version                             |
++--------------+----------------+------------------+----------------------------------------------+
+| \<add rows   |                |                  |                                              |
+| as           |                |                  |                                              |
+| necessary\>  |                |                  |                                              |
++--------------+----------------+------------------+----------------------------------------------+
+
+\<End of example text\>
+
+# List of Abbreviations \[and Definitions of Terms\]  {#sec-list-of-abbreviations .unnumbered}
+
+<!-- CPT guidance (template text, not part of the SAP):
+A list of the abbreviations and, if applicable, the definitions of specialized or unusual terms
+should be provided.
+-->
+
+<!-- CPT guidance (template text, not part of the SAP):
+This list serves as the first appearance of all abbreviations therein. Thus, abbreviations do not
+need to be spelled out anywhere else in the document text.
+-->
+
+<!-- CPT guidance (template text, not part of the SAP):
+An abbreviation should only be introduced if needed more than once.
+-->
+
+<!-- CPT guidance (template text, not part of the SAP):
+Widely known abbreviations (for example USA, AIDS, common units of measurement) may be used
+without spelling them out and without adding them to the list.
+-->
+
+<!-- CPT guidance (template text, not part of the SAP):
+Abbreviations used in tables or figures only do not need to be included in this list if already
+explained in the respective table or figure.
+-->
+
+<!-- CPT guidance (template text, not part of the SAP):
+Each abbreviation is to be used for one term only. Thus, if the same abbreviation is commonly
+known for more than one term (eg, SD = "standard deviation" or "stable disease"), only one of
+those terms may be abbreviated in that way; the other terms are either to be spelled out
+throughout, or are to be represented by alternative, unique abbreviations.
+-->
+
+<!-- CPT guidance (template text, not part of the SAP):
+If a term gets abbreviated, its abbreviation should be used throughout; ie, abbreviations may be
+used even at the beginning of a sentence.
+-->
+
+<!-- CPT guidance (template text, not part of the SAP):
+The list may be formatted in a space-conscious manner (eg, smaller font size; double-column
+format)
+-->
+
+\<Start of example text\>
+
+  ---------------------------------------------------------------------------------------------------
+  *\[abbreviation or        *\[definition/explanation\]*
+  term\]*                   
+  ------------------------- -------------------------------------------------------------------------
+  *\[abbreviation or        *\[definition/explanation\]*
+  term\]*                   
+
+  *\[abbreviation or        *\[definition/explanation\]*
+  term\]*                   
+  ---------------------------------------------------------------------------------------------------
+
+\<End of example text\>
+
+# Introduction {#sec-introduction}
+
+The Norwegian WHO Labour Care Trial (NORWELCG) is a pivotal multicenter, stepped wedge cluster
+randomised trial aimed at evaluating the implementation of the Labour Care Guide (LCG) compared to
+the traditional WHO partograph in Norwegian hospitals. This study seeks to assess the effects of LCG
+on intrapartum interventions, maternal and neonatal outcomes, and healthcare provider and patient
+experiences.
+
+The trial adopts the principles established in the ICH E9 Statistical Principles for Clinical Trials
+and its addendum E9 (R1) focusing on estimands and sensitivity analyses. This SAP will elucidate the
+statistical methodologies intended for estimating treatment effects, aligning the analysis with the
+outlined estimands, thus ensuring a robust interpretation of trial objectives.
+
+Protocol Changes: The SAP reflects the original design of the trial as detailed in protocol version
+1.06 (dated 2024.05.09). There are currently no changes to protocol-planned analyses; future
+amendments will be meticulously documented in Section 10, underscoring transparent methodological
+evolutions responsive to trial conduct.
+
+Exclusions and Supplementary Documentation: While primary and secondary analysis specifications are
+contained herein, non-key analyses such as baseline summaries, exploratory endpoints, and detailed
+demographic analyses are not necessarily included. Some secondary analyses are considered for
+secondary publications and are further specified in topic-specific statistical analysis plans.
+
+## Objectives, Endpoints, and Estimands {#sec-objectives-endpoints-and-estimands}
+
+**Objectives and Endpoints**
+
+**Further objectives and endpoints as described in the protocol but to be specified in other
+analyses plans are provided in Section 12.1**
+
+<!-- COMMENT Inge Christoffer Olsen (2025-05-31): Is this correct? -->
+<!-- COMMENT Maria Cecilie Stivang (1900-01-01): Occurrence of intermittent fetal monitoring is ok. Next should be occurrence and type of continuous fetal monitoring. Should we also add? - Occurrence of fetal scalp lactate testing -->
+<!-- COMMENT Stine Bernitz (2025-10-15): Should be occurrence and type of intermittent fetal monitoring. (på den første) -->
+<!-- COMMENT Stine Bernitz (2025-10-15): Lactate testing should be included [2026-09-11: put to the PIs, see questions_PI_DM.md] [2026-09-29: lactate testing is an endpoint of a later SAP; not mentioned in this SAP] -->
+<!-- COMMENT Inge Christoffer Olsen (2025-10-30): Type of fetal monitoring er vel ikke et effektmål? -->
+<!-- COMMENT Maria Cecilie Stivang (2026-09-22): Jeg foreslår at vi bytter ut dystocia med prolonged first stage og prolonged second stage, det er begrepet som for det meste brukes av WHO 2018). Se også denne artikkelen: https://dx.doi.org/10.1016/j.xagr.2024.100360 [2026-09-29: 'prolonged first or second stage of labour' adopted (v0.82)] -->
+<!-- COMMENT Therese Buerengen (2026-09-22): Ja til prolonged [2026-09-29: adopted] -->
+
++--------------------------------------------------+-----------------------------------------------+
+| Objectives                                       | Endpoints                                     |
++==================================================+===============================================+
+| Primary                                          |                                               |
++--------------------------------------------------+-----------------------------------------------+
+| - To investigate the effect of LCG in women with | - Occurrence of intrapartum caesarean         |
+|   a planned vaginal delivery on intrapartum      |   sections                                    |
+|   caesarean sections                             |                                               |
++--------------------------------------------------+-----------------------------------------------+
+| Secondary                                        |                                               |
++--------------------------------------------------+-----------------------------------------------+
+| - To investigate the effect of LCG in women with | - Occurrence of Spontaneous vaginal delivery  |
+|   a planned vaginal delivery                     |                                               |
++--------------------------------------------------+-----------------------------------------------+
+|                                                  | - Occurrence of Instrumental vaginal delivery |
++--------------------------------------------------+-----------------------------------------------+
+|                                                  | - Occurrence of amniotomy during labour       |
++--------------------------------------------------+-----------------------------------------------+
+|                                                  | - Use of oxytocin during labour               |
++--------------------------------------------------+-----------------------------------------------+
+|                                                  | - Use of epidural analgesia during labour     |
++--------------------------------------------------+-----------------------------------------------+
+|                                                  | - Use of medical pain relief in labour\*      |
++--------------------------------------------------+-----------------------------------------------+
+|                                                  | - Occurrence of intermittent fetal            |
+|                                                  |   monitoring\*                                |
++--------------------------------------------------+-----------------------------------------------+
+|                                                  | - Occurrence of continuous fetal monitoring\* |
++--------------------------------------------------+-----------------------------------------------+
+|                                                  | - Degree of perineal tears\*                  |
++--------------------------------------------------+-----------------------------------------------+
+|                                                  | - Occurrence of perineal support\*            |
++--------------------------------------------------+-----------------------------------------------+
+|                                                  | - Occurrence of episiotomy                    |
++--------------------------------------------------+-----------------------------------------------+
+|                                                  | - Occurrence of postpartum haemorrhage \>     |
+|                                                  |   1000 ml                                     |
++--------------------------------------------------+-----------------------------------------------+
+|                                                  | - Time from 4 cm cervical dilation to vaginal |
+|                                                  |   delivery                                    |
++--------------------------------------------------+-----------------------------------------------+
+| - To investigate the effect of LCG on the        | - Arterial umbilical cord pH \< 7.00\*        |
+|   neonate                                        |                                               |
++--------------------------------------------------+-----------------------------------------------+
+|                                                  | - Apgar score \< 7 at 5 minutes\*             |
++--------------------------------------------------+-----------------------------------------------+
+|                                                  | - Admittance to neonatal intensive care unit  |
+|                                                  |   within 2 hours after birth\*                |
++--------------------------------------------------+-----------------------------------------------+
+| Exploratory                                      |                                               |
++--------------------------------------------------+-----------------------------------------------+
+| - To describe and explore the effect of LCG in   | - Cervix dilation at time of caesarean        |
+|   women with a planned vaginal delivery on other |   section#                                    |
+|   clinical aspects of intrapartum caesarean      |                                               |
+|   sections                                       |                                               |
++--------------------------------------------------+-----------------------------------------------+
+|                                                  | - Level of the presenting part at caesarean   |
+|                                                  |   section#                                    |
++--------------------------------------------------+-----------------------------------------------+
+|                                                  | - Fetal presentation at caesarean section#    |
++--------------------------------------------------+-----------------------------------------------+
+|                                                  | - Fetal position at caesarean section#        |
++--------------------------------------------------+-----------------------------------------------+
+|                                                  | - Main reason for caesarean section#          |
++--------------------------------------------------+-----------------------------------------------+
+|                                                  | - Reason for admission#                       |
++--------------------------------------------------+-----------------------------------------------+
+|                                                  | - Cervix dilatation at amniotomy#             |
++--------------------------------------------------+-----------------------------------------------+
+|                                                  | - Cervix dilatation at start of oxytocin      |
+|                                                  |   infusion#                                   |
++--------------------------------------------------+-----------------------------------------------+
+|                                                  | - Cervix dilatation at start of epidural      |
+|                                                  |   analgesia#                                  |
++--------------------------------------------------+-----------------------------------------------+
+|                                                  | - Cervix dilatation at induction of labour#   |
++--------------------------------------------------+-----------------------------------------------+
+|                                                  | - Type of continuous fetal monitoring\#       |
++--------------------------------------------------+-----------------------------------------------+
+|                                                  | - Occurrence of prolonged first or second     |
+|                                                  |   stage of labour according to the different  |
+|                                                  |   definitions#                                |
++--------------------------------------------------+-----------------------------------------------+
+|                                                  | - Occurrence of shared decision making        |
+|                                                  |   assessed in selected situations and         |
+|                                                  |   interventions and documented by the         |
+|                                                  |   midwife#                                    |
++--------------------------------------------------+-----------------------------------------------+
+|                                                  | - Supportive care, labour companionship\#     |
++--------------------------------------------------+-----------------------------------------------+
+|                                                  | - Type of perineal support#                   |
++--------------------------------------------------+-----------------------------------------------+
+
+\* Detailed in other statistical analysis plans
+
+\# Only descriptive, detailed in other statistical analysis plans
+
+## Estimand for Primary Objective {#sec-estimand-for-primary-objective}
+
+Primary Objective: To investigate the effect of LCG in women with a planned vaginal delivery on
+intrapartum caesarean sections
+
+<!-- COMMENT Maria Cecilie Stivang (2026-09-22): Overgang til intervensjon: Definert at startet kl. 08 dato for oppstart intervensjon, og kvinner som gikk i aktiv fødsel og benyttet det nye registreringsarket etter kl. 08, ble inkludert i intervensjonsgruppen. Kvinner som kl. 08 allerede var i fødsel, der registreringsark for kontrollperioden ble benyttet, ble registrert i kontrollperioden, selv om de fødte etter kl. 08. Overgang til transisjon: Her kunne vi ikke skille kvinnene etter hvilket registreringsark som ble benyttet, da alle brukte registreringsarket for kontrollperioden. Det var heller ingen endring i praksis denne datoen, og ansatte hadde ikke mottatt opplæring. Derfor ble skillet mellom kontroll og transisjon kun satt på bakgrunn av dato for overgang. [2026-09-29: treatment defined by the documentation form (record-key prefix); estimand table, 1.3, 3] -->
+<!-- COMMENT Therese Buerengen (2026-09-27): Tilleggsinformasjon hvis du slår alle sammen: Transition ble registrert i samme nettskjema som kontrollperioden, og vi har tatt ut transition fra kl. 08.00 basert på dato for de ulike sykehusene i randomiseringen. Intervensjonsperioden er de Maria beskriver over, men de hadde annet registreringsark og dermed eget nettskjema, vi har ikke brukt koder for å finne de i intervensjonen. [2026-09-29: as above] -->
+
+Estimand: The absolute difference in proportion of intrapartum caesarean sections between women with
+a planned vaginal delivery in need of a partograph following the LCG, once implemented, and the WHO
+partograph
+
++------------------------------------------------+-------------------------------------------------+
+| Estimand to analysis table                     |                                                 |
++================================================+=================================================+
+| Estimand                                       | Analysis                                        |
++------------------------------------------------+-------------------------------------------------+
+| Target population                              | Analysis set                                    |
++------------------------------------------------+-------------------------------------------------+
+| Adult pregnant women with a planned vaginal    | All women ≥ 18 years admitted for a planned     |
+| delivery                                       | vaginal delivery at any of the participating    |
+|                                                | hospitals in the period 01.04.2025-26.05.2026.  |
+|                                                | Women who do not wish to participate in the     |
+|                                                | trial will be excluded from the analysis set.   |
+|                                                | The participating hospitals are: Østfold        |
+|                                                | Hospital Trust, University Hospital in Northern |
+|                                                | Norway, Vestre Viken Hospital Trust: Drammen,   |
+|                                                | Stavanger University Hospital, Sørlandet        |
+|                                                | Hospital: Kristiansand, Oslo University         |
+|                                                | Hospital: Ullevål, Oslo University Hospital:    |
+|                                                | Rikshospitalet, St. Olav University Hospital,   |
+|                                                | Akershus University Hospital and Haukeland      |
+|                                                | University hospital.                            |
+|                                                |                                                 |
+|                                                | The primary analysis set (PAS, Section 3)       |
+|                                                | excludes women delivering during their          |
+|                                                | hospital's transition period (Figure 1).        |
++------------------------------------------------+-------------------------------------------------+
+| Treatment                                      | Treatment assignment                            |
++------------------------------------------------+-------------------------------------------------+
+| The LCG, once implemented, compared with the   | By the documentation form, which changed        |
+| WHO partograph. The 5-week transition          | together with the monitoring tool at each       |
+| (teaching) period in each hospital belongs to  | hospital's crossover date in the randomised     |
+| neither condition.                             | schedule: women documented on the LCG form      |
+|                                                | belong to the LCG period. The WHO partograph    |
+|                                                | form was used in both the control and the       |
+|                                                | transition period, which are separated by the   |
+|                                                | hospital's transition date (from 08:00). Women  |
+|                                                | delivering during their hospital's transition   |
+|                                                | period are excluded (primary analysis set):     |
+|                                                | including them would bias the effect towards no |
+|                                                | difference, which is anti-conservative for the  |
+|                                                | non-inferiority assessment. An analysis         |
+|                                                | including the transition periods as control is  |
+|                                                | described in Section 4.1.5.                     |
++------------------------------------------------+-------------------------------------------------+
+| Variable                                       | Outcome measure                                 |
++------------------------------------------------+-------------------------------------------------+
+| Delivery by caesarean section                  | Intrapartum caesarean sections as recorded in   |
+|                                                | the hospital\'s medical records                 |
+| Dichotomous (yes/no)                           |                                                 |
++------------------------------------------------+-------------------------------------------------+
+| Handling of intercurrent events                | Handling of missing data                        |
++------------------------------------------------+-------------------------------------------------+
+| Some hospitals may be influenced to use whole  | None found. At the blinded data review of the   |
+| of parts of LCG even before transition from    | final data export (9 September 2026; 36,324     |
+| WHO Partograph to LCG. Strategy: Treatment     | women), mode of delivery was recorded for all   |
+| policy approach---treat according to assigned  | women, and cervical dilatation (needed for the  |
+| strategy regardless of crossover timing        | principal stratum) for every intrapartum        |
+|                                                | caesarean section. Should the locked database   |
+|                                                | nevertheless contain missing values, they will  |
+|                                                | be ignored (complete-case analysis).            |
++------------------------------------------------+-------------------------------------------------+
+| The WHO partograph defines active labour from  |                                                 |
+| 4 cm cervical dilatation and the LCG from 5    |                                                 |
+| cm, so which women are "in need of a           |                                                 |
+| partograph", and which caesarean sections are  |                                                 |
+| intrapartum, depends on the tool. To compare   |                                                 |
+| like with like, a caesarean section before 5   |                                                 |
+| cm (at ≤ 4 cm) is handled by a principal       |                                                 |
+| stratum strategy: the estimand targets women   |                                                 |
+| who reach 5 cm cervical dilatation without a   |                                                 |
+| caesarean section, the point from which both   |                                                 |
+| tools are in use, and women with a caesarean   |                                                 |
+| section at ≤ 4 cm are excluded in both         |                                                 |
+| periods. In addition, caesarean sections at 4  |                                                 |
+| cm in the LCG period were registered           |                                                 |
+| retrospectively, because the LCG form starts   |                                                 |
+| at 5 cm, and may be less completely registered |                                                 |
+| than in the WHO period. Caesarean sections     |                                                 |
+| before 4 cm were not recorded in the trial.    |                                                 |
+|                                                |                                                 |
+| Stratum membership is determined during        |                                                 |
+| labour, not at baseline. The causal            |                                                 |
+| interpretation assumes that the tool does not  |                                                 |
+| affect whether a woman has a caesarean section |                                                 |
+| before 5 cm. Neither tool is used before 4 cm; |                                                 |
+| between 4 and 5 cm only the WHO partograph is, |                                                 |
+| and a caesarean section it prompts at 4 cm is  |                                                 |
+| excluded from the WHO period. This biases the  |                                                 |
+| comparison against the LCG, i.e.               |                                                 |
+| conservatively for the non-inferiority claim.  |                                                 |
+| A supplementary analysis (Section 4.1.5)       |                                                 |
+| includes the caesarean sections at 4 cm.       |                                                 |
++------------------------------------------------+-------------------------------------------------+
+| Population-level summary measure               | Analysis approach                               |
++------------------------------------------------+-------------------------------------------------+
+| The primary summary measure for treatment      | The risk difference will be computed based on a |
+| effect will be the absolute difference in      | generalised linear mixed model with a random    |
+| proportion of the target population with an    | term for cluster and fixed effect for treatment |
+| intrapartum caesarean section. A supplementary | and time interval. The link function will be    |
+| summary measure will be the relative           | the logit, and the model family will be         |
+| difference.                                    | binomial. The absolute risk difference          |
+|                                                | (primary) and the relative difference           |
+|                                                | (supplementary) will be calculated by           |
+|                                                | G-computation as population-averaged (marginal) |
+|                                                | adjusted estimates, with standard errors        |
+|                                                | estimated by the delta method.                  |
++------------------------------------------------+-------------------------------------------------+
+
+## Estimands for Secondary Objectives {#sec-estimands-for-secondary-objectives}
+
+<!-- COMMENT Maria Cecilie Stivang (2026-09-22): Se min forklaring over for hvilke kvinner som tilhører hvilken periode. [2026-09-29: treatment by documentation form] -->
+<!-- COMMENT Maria Cecilie Stivang (2026-09-25): Ta bort, siden vi besluttet å bare ha med tid fra 5 cm til vaginal fødsel? [2026-09-29: labour progression removed from this SAP] -->
+<!-- COMMENT Maria Cecilie Stivang (2026-09-22): Hvorfor 24 timer? [2026-09-29: now 36 hours from 4 cm; rationale in the time-to-event section] -->
+<!-- COMMENT Maria Cecilie Stivang (2026-09-22): Hvorfor mean og ikke median? [2026-09-29: labour progression removed from this SAP] -->
+
+All estimands for secondary objectives have the following attributes:
+
+- The target population is adult pregnant women with a planned vaginal delivery in need of a
+  partograph
+
+- The investigational intervention is using the Labour Care Guide, once implemented, as compared to
+  the WHO partograph during labour. Treatment is defined by the documentation form, which each
+  hospital changed at its crossover date in the randomised schedule (@fig-design,
+  @sec-analysis-sets). The 5-week transition (teaching) period in each hospital belongs to neither
+  condition; women delivering during it are not part of the primary analysis set.
+
+- Any intercurrent events, such as not complying to assigned labour guideline will be handled by the
+  treatment policy strategy, i.e. treat according to assigned strategy regardless of compliance
+
+- The principal stratum of the primary estimand (caesarean sections at ≤ 4 cm excluded,
+  @sec-estimand-for-primary-objective) does not apply to the secondary endpoints: all women in the
+  analysis set are included, also those with a caesarean section at 4 cm cervical dilatation
+  (caesarean sections before 4 cm were not recorded in the trial). The secondary endpoints are
+  assessed from 4 cm, where the WHO partograph starts; neither tool is used before 4 cm. Caesarean
+  sections at 4 cm in the LCG period were registered retrospectively, because the LCG form starts
+  at 5 cm; any missed cases would favour the LCG.
+
+- For amniotomy, oxytocin and epidural analgesia, only interventions performed or started at 4 cm
+  cervical dilatation or more are events, and women whose intervention was performed or started at
+  ≤ 3 cm are removed from the analysis of that endpoint (@sec-definition-of-efficacy-endpoints-for):
+  the estimand targets women who reach 4 cm without the intervention, a principal stratum. No
+  outcome window is applied to the other endpoints.
+
+- For endpoints that exist only after a vaginal birth (perineal support, episiotomy, perineal
+  tears), a caesarean section is an intercurrent event that precludes the outcome. It is handled by
+  a principal stratum strategy — the stratum of women who would deliver vaginally with either
+  labour-monitoring tool — estimated in the vaginal delivery set (@sec-analysis-sets). This relies
+  on the LCG not changing which women deliver vaginally. A supplementary analysis, which does not
+  need this assumption, uses a composite strategy, counting a caesarean section as no event, in the
+  primary analysis set.
+
+- In time from 4 cm cervical dilatation to vaginal delivery, a caesarean section is handled by a
+  composite strategy: it counts as no vaginal delivery during the whole of the first 36 hours after
+  4 cm, i.e. as at least as unfavourable as the longest labours ending in a vaginal delivery
+  (@sec-main-analytical-approach-for-time-to). A caesarean section is not treated as censoring,
+  which would target a hypothetical setting in which caesarean section is not available.
+
+- Population-level summary measures will be
+
+  - Absolute and relative difference in proportion for dichotomous endpoints
+
+  - Common odds ratio and difference in the probability of a third- or fourth-degree tear for
+    degree of perineal tears
+
+  - Difference in restricted mean time without vaginal delivery during the first 36 hours after 4 cm
+    for time from 4 cm cervical dilatation to vaginal delivery
+
+## Study Design {#sec-study-design}
+
+From the protocol section 4: The NORWELCG will be conducted as a stepped wedge cluster randomised
+trial. The choice of cluster randomisation will secure a standard guideline for the entire
+department/unit as there would be a risk of contamination if randomising on an individual level,
+given that the same midwife/obstetrician could care for women with different guidelines at the same
+time. The choice of a stepped wedge cluster randomised design is based on the possible risk of the
+Hawthorne effect in a standard cluster randomised trial, experienced when conducting the multicentre
+cluster randomised trial: The Labour Progression Study in Norway 2014-2018 (17). By allowing all
+units to use both the WHO partograph and the LCG in steps, the risk of bias represented by
+contamination and the Hawthorne effect will be reduced to a minimum. A non-inferiority approach has
+been chosen to evaluate the effect of the LCG. Labour outcomes are overall good in Norway and a
+possible national enrolment of the LCG should be based on results similar (or in case better) than
+we already have. The choice of intrapartum caesarean section rate as main outcome is due to its
+significance and the potential to merge results with other ongoing LCG studies on research priority
+questions stated by the WHO.
+
+*Randomisation*
+
+Prior to trial commencement, the clusters will be randomly assigned to one of the sequences (S1-S10)
+for time of transition from WHO partograph to the LCG (@fig-design), using a computer-generated
+randomisation system. To obtain an equal distribution of small and larger hospitals during the study
+period, randomisation will be stratified by hospital size. To obtain an equal distribution of
+intrapartum caesarean section rates between units, randomisation will also be stratified by the rate
+of intrapartum caesarean sections prior to onset of the trial. The allocation sequence will be
+masked for the units until the unit is in turn for transition to the LCG, to avoid contamination.
+
+```{r}
+#| label: fig-design
+#| fig-cap: "**Overview of the study steps and transition periods.** C = Cluster, FS = feasibility study of the electronic version of the LCG. S = steps of 5 weeks (S1-S12 = 60 weeks). Green colour denotes WHO partograph period, white colour denotes transition period for and teaching period, and blue colour denotes LCG period"
+#| fig-width: 7.5
+#| fig-height: 3.4
+# Stepped-wedge schedule as in the protocol Figure 1: cluster c uses the WHO
+# partograph in FS 2024 and S1..Sc, is in transition in S(c+1), and uses the
+# LCG from S(c+2).
+library(ggplot2)
+steps <- c("FS 2024", paste0("S", 1:12))
+sw <- expand.grid(cluster = 1:10, s = 0:12)
+sw$period <- with(sw, ifelse(s <= cluster, "WHO partograph",
+                      ifelse(s == cluster + 1, "Transition", "LCG")))
+sw$period <- factor(sw$period, c("WHO partograph", "Transition", "LCG"))
+sw$step <- factor(sw$s, levels = 0:12, labels = steps)
+sw$clus <- factor(sw$cluster, levels = 10:1)
+ggplot(sw, aes(step, clus, fill = period)) +
+  geom_tile(colour = "grey35", linewidth = 0.3) +
+  geom_text(data = subset(sw, period == "Transition"), aes(label = "T"),
+            size = 3) +
+  scale_fill_manual(values = c("WHO partograph" = "#77A548",
+                               "Transition" = "white", "LCG" = "#9DC3E6")) +
+  scale_x_discrete(position = "top") +
+  labs(x = NULL, y = "C", fill = NULL) +
+  theme_minimal(base_size = 10) +
+  theme(panel.grid = element_blank(), legend.position = "bottom",
+        axis.title.y = element_text(angle = 0, vjust = 1))
+```
+
+# General Considerations {#sec-general-considerations}
+
+As stated in the protocol, this SAP has been written and approved prior to commencement of the
+analysis and without knowledge of allocation. Amendments to plan can be done until day of data base
+lock. The statistician will perform analysis blinded to the participant's guideline allocation to
+assess the appropriateness and validity of the prespecified statistical analyses. This revision will
+be based on a blinded look at the data, and any changes to the SAP will not be based on any
+unblinded inference.
+
+## Statistical Hypotheses and Conclusion Criteria {#sec-statistical-hypotheses-and-conclusion}
+
+The primary hypothesis is one of non-inferiority: the WHO partograph is the standard of care and the
+LCG the new approach, and a lower caesarean section rate with the LCG would be a favourable outcome,
+not a failure to show equivalence. With the difference defined as the proportion of intrapartum
+caesarean sections with the LCG minus that with the WHO partograph, among women with a planned
+vaginal delivery (primary estimand, @sec-estimand-for-primary-objective), the null hypothesis is
+
+- H~0~: the difference is greater than or equal to 1.5 percentage points (the LCG is inferior),
+
+and the alternative hypothesis is
+
+- H~1~: the difference is less than 1.5 percentage points (the LCG is non-inferior).
+
+The non-inferiority margin is 1.5 percentage points. The null hypothesis is rejected, and the LCG
+concluded non-inferior to the WHO partograph, if the upper limit of the two-sided 95% confidence
+interval for the difference lies below 1.5 percentage points. This corresponds to a one-sided test
+at the 2.5% significance level.
+
+If non-inferiority is shown, superiority of the LCG is tested next, in a fixed sequence and without
+adjustment of the significance level: the LCG is concluded superior (fewer intrapartum caesarean
+sections) if the upper limit of the same confidence interval also lies below 0.
+
+## Multiplicity Adjustment {#sec-multiplicity-adjustment}
+
+The non-inferiority and superiority tests of the primary estimand form a fixed sequence
+(@sec-statistical-hypotheses-and-conclusion): superiority is tested only if non-inferiority has
+been shown, which keeps the overall one-sided type I error at 2.5% without adjustment. There will be
+no adjustments for multiplicity for the secondary endpoints.
+
+## Impact of Intercurrent Events Strategies {#sec-impact-of-intercurrent-events-strategies}
+
+The treatment policy strategy implies that we are looking at the effect of intending to use the
+interventional treatment (using the LCG guideline) regardless of actual implementation or compliance
+to the protocol. For the primary endpoint, the principal stratum strategy restricts the comparison
+to women who reach 5 cm cervical dilatation without a caesarean section
+(@sec-estimand-for-primary-objective). Stratum membership is determined
+during labour, not at baseline, so the causal interpretation of the difference rests on the
+assumption that the allocated tool does not affect whether a woman has a caesarean section before
+5 cm. This is plausible because neither tool is used before 4 cm; any departure between 4 and 5 cm,
+where only the WHO partograph is in use, would bias the comparison against the LCG, i.e.
+conservatively for the non-inferiority claim. Supplementary analysis 1 in
+@sec-supplementary-analysis examines the choice of threshold. The secondary endpoints include the caesarean sections at 4 cm and
+are assessed from 4 cm; for amniotomy, oxytocin and epidural analgesia the stratum is women who
+reach 4 cm without the intervention, and for endpoints that exist only after a vaginal birth a
+further principal stratum (vaginal delivery) is used (@sec-estimands-for-secondary-objectives).
+
+## Handling of Missing Data {#sec-handling-of-missing-data}
+
+Generally, there will be three methods to deal with missing data:
+
+1)  Using multiple imputation where the imputation is based on a model with baseline information
+    such as women's age, gestational age, hospital, treatment and time interval as fixed effects
+
+2)  Imputing with worst outcome
+
+3)  Ignoring missing data
+
+The last two approaches will only be used in cases where there are very few missing data. The
+precise handling of missing data will be detailed by endpoint/estimand in section 4 and 5. The
+handling of missing data will be revised before database lock and final signed version of this SAP.
+This revision will be based on a blinded look at the data, and any changes to the handling will not
+be based on any unblinded inference.
+
+Missing values of covariates used for adjustment are handled by the missing-indicator method
+(@sec-adjustment-for-covariates).
+
+# Analysis Sets {#sec-analysis-sets}
+
+<!-- COMMENT Maria Cecilie Stivang (2026-09-22): Se min tidligere kommentar. [2026-09-29: treatment by documentation form] -->
+<!-- COMMENT Maria Cecilie Stivang (2026-09-25): Labour progression ble tatt bort fra denne SAP i forrige møte, vi beholdt kun time from 5 cm to vaginal delivery. [2026-09-29: removed; time to vaginal delivery now from 4 cm] -->
+
+Three analysis sets are defined. Whether a woman belongs to the control, transition or LCG period
+is determined by the documentation form, which is directly linked to the change of monitoring
+tool. The LCG form was taken into use at 08:00 on the hospital's crossover date in the randomised
+schedule (@fig-design): women who entered active labour after that time and were documented on the
+LCG form belong to the LCG period, and women already in labour and documented on the WHO partograph
+form belong to the preceding period, even if they gave birth later. The WHO partograph form was
+used in both the control and the transition period; the two are separated by the hospital's
+transition date in the randomised schedule, from 08:00 on that date. The period is given by the
+prefix of the record key (CTR, TRAN or INT).
+
+The time interval (step) used in the models is determined by the date and time of birth. The twelve
+5-week steps start at 08:00 on the Tuesdays 1 April 2025 (step 1, week 14), 6 May, 10 June, 15 July,
+19 August, 23 September, 28 October and 2 December 2025, and 6 January, 10 February, 17 March and
+21 April 2026 (step 12, week 17); births on the last inclusion day (26 May 2026) belong to step 12.
+A woman in labour at a change of period may therefore belong to a period that differs from the
+scheduled period of the step in which she gave birth.
+
+**Full analysis set (FAS).** All women ≥ 18 years old admitted for a planned vaginal delivery in need
+of a partograph at any of the participating hospitals in the period 01.04.25-26.05.26. The
+participating hospitals are: Østfold Hospital Trust, University Hospital in Northern Norway, Vestre
+Viken Hospital Trust: Drammen, Stavanger University Hospital, Sørlandet Hospital: Kristiansand, Oslo
+University Hospital: Ullevål, Oslo University Hospital: Rikshospitalet, St. Olav University
+Hospital, Akershus University Hospital and Haukeland University hospital. Women who explicitly do not
+wish to participate in the trial will be excluded. The FAS includes the women delivering during the
+transition periods; it is used for the analysis that includes these periods
+(@sec-supplementary-analysis) and to describe the trial population and flow.
+
+**Primary analysis set (PAS).** The FAS excluding women delivering during their hospital's
+transition period (@fig-design). During the transition period staff were trained in the LCG but were
+asked not to act on it until the period had ended, so these women received neither condition as
+intended. Including them, as either condition, would bias the treatment effect towards no
+difference, which is anti-conservative for the non-inferiority assessment. The PAS is used for the
+primary analysis and for all secondary analyses unless stated otherwise.
+
+**Vaginal delivery set (VDS).** The women in the PAS who delivered vaginally (spontaneous or
+instrumental). Used for endpoints that exist only after a vaginal birth (perineal support,
+episiotomy, perineal tears; see @sec-estimands-for-secondary-objectives) and for the duration
+component of time from 4 cm cervical dilatation to vaginal delivery
+(@sec-main-analytical-approach-for-time-to).
+
+The principal stratum exclusion defined for the primary estimand
+(@sec-estimand-for-primary-objective) is applied to the primary endpoint and its sensitivity
+analyses only; the secondary analyses include the caesarean sections at 4 cm
+(@sec-estimands-for-secondary-objectives).
+
+# Analyses Supporting Primary Objective(s) {#sec-analyses-supporting-primary-objective-s}
+
+## Primary Estimand  {#sec-primary-estimand}
+
+The primary estimand is the absolute difference in proportion of intrapartum caesarean sections
+between women with a planned vaginal delivery in need of a partograph following the LCG and the WHO
+partograph
+
+### Definition of Endpoint(s)  {#sec-definition-of-endpoint-s}
+
+The endpoint is delivery by intrapartum caesarean section as recorded in the hospital's medical
+records. For multiple births, the woman's mode of delivery is the most operative across the babies
+(caesarean section, then instrumental, then spontaneous vaginal delivery), so a caesarean section
+for any baby counts as an intrapartum caesarean section. A caesarean section after a failed
+instrumental attempt is a caesarean section. If the mode of delivery of a second-born twin is not
+recorded, that of the first-born twin is used.
+
+### Main Analytical Approach {#sec-main-analytical-approach}
+
+The risk difference will be estimated from a generalised linear mixed model (binomial family, logit
+link) with a random intercept for cluster (hospital) and fixed effects for treatment, time interval
+(step) and the covariates in @sec-adjustment-for-covariates. The marginal (population-averaged)
+risks are obtained by G-computation (standardisation): for every woman in the analysis set, the
+probability of an intrapartum caesarean section is predicted under the LCG and under the WHO
+partograph, with her own covariates and time interval and integrating over the distribution of the
+random cluster effect (Gauss–Hermite quadrature), and the predictions are averaged over all women.
+The absolute risk difference (primary summary measure) is the difference between the two averaged
+risks and the relative difference (supplementary) their ratio. Standard errors are obtained by the
+delta method. Because the average is taken over the time intervals of the analysis set, the
+estimate refers to the whole trial period.
+
+No missing data were found for this endpoint at the blinded data review of the final data export
+(9 September 2026): mode of delivery was recorded for all 36,324 women, and cervical dilatation for
+every intrapartum caesarean section, so membership of the principal stratum is also fully
+determined. Should the locked database nevertheless contain missing values, they will be ignored
+and handled by the model (complete-case analysis).
+
+The absolute and relative differences will be presented with two-sided 95% confidence intervals,
+which also give the non-inferiority and superiority conclusions
+(@sec-statistical-hypotheses-and-conclusion).
+
+### Adjustment for covariates {#sec-adjustment-for-covariates}
+
+<!-- COMMENT Inge Christoffer Olsen (2026-09-10): Hvordan er disse definert? [resolved 2026-09-11: birthweight percentiles dropped; covariate derivations in the Supporting Documentation] -->
+<!-- COMMENT Therese Buerengen (2026-05-04): Vi fikk 2023 tall fra MFR [resolved 2026-09-11: hospital-level covariates are not used for adjustment, see below] -->
+
+The primary model is adjusted for a short, pre-specified set of strong prognostic factors for
+intrapartum caesarean section, to increase the precision of the standardised risk difference and to
+protect against changes in case mix across time intervals within hospitals:
+
+- Robson ten-group classification (the nine groups present in a planned vaginal delivery population)
+
+- Maternal age (years)
+
+- Maternal pre-pregnancy body mass index (kg/m^2^)
+
+- Maternal height (cm)
+
+- Birth weight (g; first-born twin for multiple births)
+
+- Gestational age at birth (weeks + days)
+
+The set was confirmed at a blinded review of the pooled data before unblinding (all study periods
+combined; no treatment, time interval or hospital term in the model): Robson group, maternal
+height, birth weight, maternal age, pre-pregnancy body mass index and gestational age were the
+strongest predictors of intrapartum caesarean section. Education and hypertensive disorders were borderline, and country of origin (Norway vs other)
+contributed little; they are not included.
+
+Continuous covariates enter as restricted cubic splines with three knots (10th, 50th and 90th
+percentiles); this is also the default for continuous covariates in the secondary analyses unless
+stated otherwise for an endpoint. The Robson classification already encodes parity, previous caesarean section, onset of
+labour, fetal presentation and multiple pregnancy, which are therefore not added separately; it
+distinguishes only term from preterm birth, so gestational age is included as a continuous
+covariate. Hospital-level characteristics (annual number of deliveries,
+intrapartum caesarean section rate) and the randomisation stratification factors are constant within a hospital
+and are accounted for by the random cluster effect; they are not added as covariates.
+
+Missing covariate values are handled by the missing-indicator method: a separate "missing" category
+for categorical covariates, and the median plus a missing indicator for continuous covariates, so
+that no woman is excluded from the analysis because of a missing covariate. The indicator is
+included only where at least ten values are missing; with fewer, the median is used without an
+indicator, because an indicator for a handful of women is not estimable.
+
+Covariate adjustment for secondary endpoints is specified for each endpoint after a blinded review
+of the data (@sec-analyses-supporting-secondary-objective). The other characteristics listed in
+earlier versions of this SAP (country of origin, marital status, education, smoking, snuff use, medically treated
+diabetes, hypertensive disorders, sex of the baby, head circumference) are presented
+in the baseline characteristics table but not used for adjustment. Amniotomy, oxytocin infusion
+and epidural analgesia started before 4 cm cervical dilatation (the women concerned are excluded
+from the corresponding secondary endpoint, @sec-definition-of-efficacy-endpoints-for) are also
+presented in the baseline characteristics table, as are the annual number of deliveries of the
+hospital, first vaginal delivery, contractions at admission and birthweight percentile, which are
+not used for adjustment. Derivations are given in @sec-data-derivations.
+
+### Sensitivity Analyses {#sec-sensitivity-analyses}
+
+The sensitivity analyses keep the primary estimand and vary assumptions of the main analytical
+approach:
+
+1)  Unadjusted model: the model of @sec-main-analytical-approach without the covariates of
+    @sec-adjustment-for-covariates (treatment, time interval and random cluster effect only).
+
+2)  Fixed cluster effects: hospital as a fixed effect instead of a random effect, as a check on the
+    random-effect assumption with ten clusters.
+
+<!-- CPT guidance (template text, not part of the SAP):
+Describe the planned sensitivity analyses and how the sensitivity analyses will target the
+assumptions behind the main analytical approach(es) or limitations in data. Pay special attention
+to assumptions regarding the missing data mechanism. If a range of methods is proposed, each
+should target different assumptions in order to explore how these may influence the results
+obtained from the main analysis.
+-->
+
+### Supplementary Analysis {#sec-supplementary-analysis}
+
+<!-- COMMENT Maria Cecilie Stivang (2026-09-22): Mulig jeg misforstår noe her, men vi har ikke data på kvinner med sectio ved 1, 2 eller 3 cm. Disse ble ekskludert fra datainnsamlingen. [2026-09-29: supplementary analyses 1 and 2 were identical on these data and are merged] -->
+<!-- COMMENT Maria Cecilie Stivang (2026-09-22): Skjønte ikke helt denne setningen.. Disse ble etter-registrert, data ble altså ikke samlet inn helt på samme måte som de ble gjort i kontrollperioden. Hva menes med "Before the LCG is in use"? [2026-09-29: sentence rewritten: retrospective registration] -->
+
+The supplementary analyses target estimands that differ from the primary estimand in one
+attribute. All use the model and G-computation of @sec-main-analytical-approach.
+
+1)  Caesarean sections at 4 cm included (intercurrent-event strategy): all women in the primary
+    analysis set are analysed, and caesarean sections at 4 cm are counted as events in both periods
+    (no principal stratum exclusion). Caesarean sections before 4 cm were not recorded in the trial,
+    so this is also the treatment policy strategy for the recorded population. In the LCG period,
+    caesarean sections at 4 cm were registered retrospectively, because the LCG form starts at 5 cm
+    (confirmed by the investigators, 11 and 22 September 2026); any missed cases would favour the
+    LCG.
+
+2)  Transition periods included (treatment attribute and analysis set): all women in the full
+    analysis set are analysed, with the transition period handled as a control period. During the
+    transition period staff were trained in the LCG but were asked not to act on it until the period
+    had ended.
+
+3)  Exposure time (treatment attribute): the effect of the LCG is allowed to depend on the time since
+    the hospital started using it, with separate LCG effects for the first 5-week step after the
+    transition period and for later steps (exposure-time model; Kenny et al. 2022). This examines
+    whether the effect of the LCG changes as its use becomes established.
+
+<!-- CPT guidance (template text, not part of the SAP):
+Describe any supplementary analyses.
+-->
+
+<!-- CPT guidance (template text, not part of the SAP):
+The estimation of supplementary estimands for the primary objective, can be described in this
+section or in a separate level 2 section.
+-->
+
+<!-- CPT guidance (template text, not part of the SAP):
+Estimands to be estimated, but not defined in Section 3 of the protocol or in Section 1.1 of the
+SAP, should be defined in this section. If the estimand is similar to another already defined
+estimand and only differs by one or two attributes, the defined estimand can be referenced and
+only the attributes that are different need be mentioned.
+-->
+
+<!-- CPT guidance (template text, not part of the SAP):
+If not defined in Section 3 of the SAP, describe which participants and data points are included
+in the analysis set(s) to be used to estimate each of the estimand(s) related to supplementary
+analyses.
+-->
+
+<!-- CPT guidance (template text, not part of the SAP):
+If the SAP is updated during study conduct and new intercurrent events that are not part of the
+predefined estimand(s) have emerged during study conduct, it should be addressed here. If the new
+intercurrent events result in a change of primary estimand, a protocol amendment should be
+considered.
+-->
+
+# Analyses Supporting Secondary Objective(s) {#sec-analyses-supporting-secondary-objective}
+
+<!-- CPT guidance (template text, not part of the SAP):
+This information should be copied directly from the protocol (Section 9.4). Additional details may
+be added.
+-->
+
+## Analyses Supporting Secondary Objectives:  {#sec-analyses-supporting-secondary-objectives}
+
+### Secondary Endpoints  {#sec-secondary-endpoints}
+
+<!-- CPT guidance (template text, not part of the SAP):
+Key/confirmatory secondary endpoint(s)/estimand(s) (eg, for which a label claim is pursued) are part
+of the confirmatory hypotheses where the type 1 error is controlled (via multiplicity adjustment).
+It is recommended to use the same structure as in Section 4.1 and describe the analysis of such
+endpoint(s)/estimand(s) to the same level of detail as the primary endpoint(s)/estimand(s) being
+described in Section 4.1. If the same methodology/analytical approach is taken for these endpoints,
+it will be sufficient to add a crossreference to Section 4.1.2/4.1.3 to avoid redundancy.
+-->
+
+C: Continuous, non-skewed; C\*: Continuous possibly skewed; D: Dichotomous; Cat: Categorical; Ord:
+Ordinal; TTE: Time to event; MN: Multinomial; RM: Repeated measures
+
+#### Definition of Efficacy Endpoints for investigating the effect of LCG in women with a planned vaginal delivery {#sec-definition-of-efficacy-endpoints-for}
+
+<!-- COMMENT Stine Bernitz (2025-10-15): We need to discuss handling of missing data overall -->
+<!-- COMMENT Inge Christoffer Olsen (2025-11-27): Make some preliminary indications now, and then change once we do the blind review. -->
+
++----------------------+-----------------------------------+-----------------+--------------------+
+| Endpoint             | Measure details                   | Endpoint        | Handling of        |
+|                      |                                   | category        | missing data       |
++======================+===================================+=================+====================+
+| Spontaneous vaginal  | Vaginal delivery without forceps  | D               | No missing data    |
+| delivery             | or vacuum, any presentation       |                 | observed in blind  |
+|                      | (including vaginal breech), as    |                 | review             |
+|                      | recorded in the hospital's        |                 |                    |
+|                      | medical records. Multiple         |                 |                    |
+|                      | births: spontaneous only if       |                 |                    |
+|                      | every baby is born                |                 |                    |
+|                      | spontaneously                     |                 |                    |
++----------------------+-----------------------------------+-----------------+--------------------+
+| Instrumental vaginal | Vaginal delivery with forceps or  | D               | No missing data    |
+| delivery (forceps or | vacuum (combined), as recorded in |                 | observed in blind  |
+| vacuum)              | the hospital's medical records.   |                 | review             |
+|                      | Mode of delivery is classified    |                 |                    |
+|                      | as spontaneous vaginal,           |                 |                    |
+|                      | instrumental vaginal or           |                 |                    |
+|                      | caesarean section; a failed       |                 |                    |
+|                      | instrumental attempt followed by  |                 |                    |
+|                      | caesarean section counts as       |                 |                    |
+|                      | caesarean section. Multiple       |                 |                    |
+|                      | births: most operative mode       |                 |                    |
+|                      | across the babies                 |                 |                    |
++----------------------+-----------------------------------+-----------------+--------------------+
+| Occurrence of        | Amniotomy performed at 4 cm       | D               | Blind review: 164  |
+| amniotomy during     | cervical dilatation or more, as   |                 | amniotomies with   |
+| labour               | recorded in the hospital's        |                 | no dilation        |
+|                      | medical records. Women with an    |                 | recorded, counted  |
+|                      | amniotomy before 4 cm are         |                 | as events; 1 woman |
+|                      | excluded from the analysis of     |                 | with missing       |
+|                      | this endpoint. The recorded       |                 | amniotomy status   |
+|                      | amniotomy may include amniotomy   |                 | imputed as no      |
+|                      | as a method of induction of       |                 |                    |
+|                      | labour, which is usually          |                 |                    |
+|                      | performed before 4 cm             |                 |                    |
++----------------------+-----------------------------------+-----------------+--------------------+
+| Use of oxytocin      | Oxytocin infusion started at 4 cm | D               | Blind review: 106  |
+| during labour        | cervical dilatation or more       |                 | infusions with no  |
+|                      | (including the second stage), as  |                 | start dilation     |
+|                      | recorded in the hospital's        |                 | recorded, counted  |
+|                      | medical records. Women with an    |                 | as events; 1 woman |
+|                      | infusion started before 4 cm are  |                 | with missing       |
+|                      | excluded from the analysis of     |                 | oxytocin status    |
+|                      | this endpoint. The recorded       |                 | imputed as no      |
+|                      | infusion may include oxytocin as  |                 |                    |
+|                      | a method of induction of labour,  |                 |                    |
+|                      | which is usually started before 4 |                 |                    |
+|                      | cm                                |                 |                    |
++----------------------+-----------------------------------+-----------------+--------------------+
+| Use of epidural      | Epidural analgesia started at 4   | D               | Blind review: 462  |
+| analgesia during     | cm cervical dilatation or more,   |                 | epidurals with no  |
+| labour               | as recorded in the hospital's     |                 | start dilation     |
+|                      | medical records. Women with an    |                 | recorded, counted  |
+|                      | epidural started before 4 cm are  |                 | as events; 15      |
+|                      | excluded from the analysis of     |                 | women with missing |
+|                      | this endpoint                     |                 | epidural status    |
+|                      |                                   |                 | imputed as no      |
++----------------------+-----------------------------------+-----------------+--------------------+
+| Use of medical pain  | Any use of medical pain relief    | D               | Blind review: 16   |
+| relief during labour | during labour, whatever the       |                 | women with missing |
+|                      | timing, as recorded in the        |                 | status imputed as  |
+|                      | hospital's medical records:       |                 | no                 |
+|                      | epidural analgesia, spinal        |                 |                    |
+|                      | analgesia, pudendal block,        |                 |                    |
+|                      | nitrous oxide or other. Timing is |                 |                    |
+|                      | not recorded for methods other    |                 |                    |
+|                      | than epidural, so no 4 cm window  |                 |                    |
+|                      | is applied. Spinal analgesia and  |                 |                    |
+|                      | pudendal block were to be         |                 |                    |
+|                      | recorded only when given for pain |                 |                    |
+|                      | relief in labour, but may in some |                 |                    |
+|                      | cases include anaesthesia for     |                 |                    |
+|                      | caesarean section, instrumental   |                 |                    |
+|                      | delivery or episiotomy            |                 |                    |
++----------------------+-----------------------------------+-----------------+--------------------+
+| Intermittent fetal   | Exclusive intermittent fetal      | D               | Blind review: 107  |
+| monitoring           | monitoring in labour:             |                 | 'none' and 2 with  |
+|                      | intermittent monitoring recorded  |                 | nothing ticked,    |
+|                      | and neither continuous external   |                 | counted as no      |
+|                      | CTG nor STAN/continuous internal  |                 | event; a ticked    |
+|                      | CTG. Women converted to           |                 | intermittent box   |
+|                      | continuous monitoring are not     |                 | overrides 'none'   |
+|                      | events. Timing is not recorded,   |                 |                    |
+|                      | so no 4 cm window is applied.     |                 |                    |
+|                      | Continuous external CTG is        |                 |                    |
+|                      | assumed to include the admission  |                 |                    |
+|                      | CTG, so exclusive intermittent    |                 |                    |
+|                      | monitoring may be understated     |                 |                    |
++----------------------+-----------------------------------+-----------------+--------------------+
+| Continuous fetal     | Any continuous fetal monitoring   | D               | Blind review: 107  |
+| monitoring           | in labour: continuous external    |                 | 'none' and 2 with  |
+|                      | CTG or STAN/continuous internal   |                 | nothing ticked,    |
+|                      | CTG recorded (with or without     |                 | counted as no      |
+|                      | intermittent monitoring).         |                 | event              |
+|                      | Continuous external CTG is        |                 |                    |
+|                      | assumed to include the admission  |                 |                    |
+|                      | CTG. Timing is not recorded, so   |                 |                    |
+|                      | no 4 cm window is applied         |                 |                    |
++----------------------+-----------------------------------+-----------------+--------------------+
+| Occurrence of        | Any perineal support technique    | D               | Blind review:      |
+| perineal support     | used at the birth of the head     |                 | 4,014 (11.9%) not  |
+|                      | (Ritgen or modified Ritgen        |                 | recorded; multiple |
+|                      | manoeuvre, or supporting          |                 | imputation (MAR)   |
+|                      | flat-hand grip) as recorded in    |                 |                    |
+|                      | the hospital's medical records    |                 | Vaginal delivery   |
+|                      |                                   |                 | set (VDS)          |
++----------------------+-----------------------------------+-----------------+--------------------+
+| Episiotomy           | Use of episiotomy in labour.      | D               | Blind review: 8    |
+|                      |                                   |                 | women with missing |
+|                      |                                   |                 | status imputed as  |
+|                      |                                   |                 | no                 |
+|                      |                                   |                 |                    |
+|                      |                                   |                 | Vaginal delivery   |
+|                      |                                   |                 | set (VDS)          |
++----------------------+-----------------------------------+-----------------+--------------------+
+| Degree of perineal   | Highest degree of perineal tear   | Ord             | Blind review: 391  |
+| tears                | as recorded in the hospital's     |                 | (1.2%): 376 with   |
+|                      | medical records, analysed as a    |                 | no tear status, 15 |
+|                      | categorical variable from 0 to 4: |                 | with a tear but no |
+|                      | 0 = no tear, 1-4 = first- to      |                 | grade; complete    |
+|                      | fourth-degree tear (3a-3c         |                 | case (CC)          |
+|                      | combined as third degree)         |                 |                    |
+|                      |                                   |                 | Vaginal delivery   |
+|                      |                                   |                 | set (VDS)          |
++----------------------+-----------------------------------+-----------------+--------------------+
+| Occurrence of        | Estimated blood loss \> 1000 ml   | D               | Blind review: 181  |
+| post-partum          | within 2 hours after birth, as    |                 | women (0.5%) with  |
+| haemorrhage \> 1000  | recorded in the hospital's        |                 | no blood loss      |
+| ml                   | medical records. Blood loss of    |                 | recorded; complete |
+|                      | exactly 1000 ml (a common         |                 | case (CC)          |
+|                      | rounded value) is not an event    |                 |                    |
++----------------------+-----------------------------------+-----------------+--------------------+
+| Time from 4 cm       | Time from 4 cm cervical dilation  | TTE             | Caesarean section: |
+| cervical dilation to | until vaginal delivery (birth of  |                 | 36 h (composite,   |
+| vaginal delivery     | the first baby), restricted to    |                 | see text). Missing |
+|                      | the first 36 hours: min(T, 36 h)  |                 | 4 cm time:         |
+|                      | after a vaginal delivery, 36 h    |                 | multiple           |
+|                      | after a caesarean section. Time   |                 | imputation (MAR)   |
+|                      | zero is the vaginal examination   |                 |                    |
+|                      | at which 4 cm was found; if no    |                 |                    |
+|                      | examination found 4 cm, the time  |                 |                    |
+|                      | of reaching 4 cm is multiply      |                 |                    |
+|                      | imputed (see text)                |                 |                    |
++----------------------+-----------------------------------+-----------------+--------------------+
+
+C: Continuous, non-skewed; C\*: Continuous possibly skewed; D: Dichotomous; Cat: Categorical; Ord:
+Ordinal; TTE: Time to event; MN; RM: Repeated measures
+
+#### Definition of efficacy Endpoints for investigating the effect of LCG on the neonate {#sec-definition-of-efficacy-endpoints-for-1}
+
++----------------------+-----------------------------------+-----------------+--------------------+
+| Endpoint             | Measure details                   | Endpoint        | Handling of        |
+|                      |                                   | category        | missing data       |
++======================+===================================+=================+====================+
+| Apgar score < 7 at 5 | The Apgar score < 7 evaluated at  | D               | Blind review: 4    |
+| minutes after birth  | 5 minutes after birth in any baby |                 | first-born and 3   |
+|                      | (worst baby per woman for         |                 | second-born twins  |
+|                      | multiple births, among the babies |                 | without a score;   |
+|                      | with a score) as recorded in the  |                 | complete case (CC) |
+|                      | hospital's medical records;       |                 |                    |
+|                      | stillborn babies as recorded      |                 |                    |
++----------------------+-----------------------------------+-----------------+--------------------+
+| Admittance to        | Any admittance of any duration of | D               | No missing data    |
+| neonatal intensive   | any baby to the neonatal          |                 | observed in blind  |
+| care unit within 2   | intensive care unit within 2      |                 | review             |
+| hours after birth    | hours after birth as recorded in  |                 |                    |
+|                      | the hospital's medical records    |                 |                    |
+|                      | (worst baby per woman; a          |                 |                    |
+|                      | stillborn baby is not admitted)   |                 |                    |
++----------------------+-----------------------------------+-----------------+--------------------+
+| Arterial umbilical   | Arterial umbilical cord pH < 7.00 | D               | Blind review:      |
+| cord pH < 7.00       | in any baby (worst baby per woman |                 | arterial pH not    |
+|                      | for multiple births, among the    |                 | recorded in 27.5%; |
+|                      | measured babies)                  |                 | multiple           |
+|                      |                                   |                 | imputation (MAR),  |
+|                      |                                   |                 | see text           |
++----------------------+-----------------------------------+-----------------+--------------------+
+
+C: Continuous, non-skewed; C\*: Continuous possibly skewed; D: Dichotomous; Cat: Categorical; Ord:
+Ordinal; TTE: Time to event; MN: Multinomial; RM: Repeated measures
+
+#### Definition of Descriptive or Exploratory Endpoints for investigating the effect of LCG in women {#sec-definition-of-descriptive-or}
+
+<!-- COMMENT Maria Cecilie Stivang (2025-11-28): Er ikke dette et effekt-endepunkt? I SAP varighet. -->
+
++----------------------+-----------------------------------+-----------------+--------------------+
+| Endpoint             | Measure details                   | Endpoint        | Handling of        |
+|                      |                                   | category        | missing data       |
++======================+===================================+=================+====================+
+| Cervix dilation at   | Cervix dilation in cm at time of  | C\*             |                    |
+| time of caesarean    | caesarean section                 |                 |                    |
+| section              |                                   |                 |                    |
++----------------------+-----------------------------------+-----------------+--------------------+
+| Level of the         | Level of the presenting part at   | Cat             |                    |
+| presenting part at   | caesarean section                 |                 |                    |
+| caesarean section    |                                   |                 |                    |
+|                      | Above the ischial spines, at the  |                 |                    |
+|                      | level of the ischial spines,      |                 |                    |
+|                      | below the ischial spines          |                 |                    |
++----------------------+-----------------------------------+-----------------+--------------------+
+| Fetal presentation   | Fetal presentation at caesarean   | Cat             |                    |
+| at caesarean section | section                           |                 |                    |
+|                      |                                   |                 |                    |
+|                      | Breech, occiput (vertex),         |                 |                    |
+|                      | sinciput, brow or face            |                 |                    |
++----------------------+-----------------------------------+-----------------+--------------------+
+| Fetal position at    | Fetal position at caesarean       | Cat             |                    |
+| caesarean section    | section                           |                 |                    |
+|                      |                                   |                 |                    |
+|                      | Occiput anterior, occiput         |                 |                    |
+|                      | posterior or transverse           |                 |                    |
++----------------------+-----------------------------------+-----------------+--------------------+
+| Main reason for      | Main reason for caesarean section | Cat             |                    |
+| caesarean section    |                                   |                 |                    |
+|                      | Fetal distress, prolonged first   |                 |                    |
+|                      | or second stage of labour, failed |                 |                    |
+|                      | induction, failed instrumental    |                 |                    |
+|                      | vaginal delivery, breech,         |                 |                    |
+|                      | maternal consideration, others    |                 |                    |
++----------------------+-----------------------------------+-----------------+--------------------+
+| Reason for admission | Main reason for admission to the  | Cat             |                    |
+|                      | labour ward                       |                 |                    |
+|                      |                                   |                 |                    |
+|                      | Contractions, rupture of          |                 |                    |
+|                      | membranes, rupture of membranes   |                 |                    |
+|                      | and contractions, induction of    |                 |                    |
+|                      | labour, other                     |                 |                    |
++----------------------+-----------------------------------+-----------------+--------------------+
+| Cervix dilatation at | Cervical dilatation (cm) at which | Cat             |                    |
+| amniotomy            | amniotomy was performed, as       |                 |                    |
+|                      | recorded, including amniotomy for |                 |                    |
+|                      | induction of labour; number and   |                 |                    |
+|                      | percentage of women by centimetre |                 |                    |
+|                      | (1–10 cm, not recorded), by       |                 |                    |
+|                      | treatment                         |                 |                    |
++----------------------+-----------------------------------+-----------------+--------------------+
+| Cervix dilatation at | Cervical dilatation (cm) at the   | Cat             |                    |
+| start of oxytocin    | start of oxytocin infusion, as    |                 |                    |
+| infusion             | recorded, including oxytocin for  |                 |                    |
+|                      | induction of labour; number and   |                 |                    |
+|                      | percentage of women by centimetre |                 |                    |
+|                      | (1–10 cm, not recorded), by       |                 |                    |
+|                      | treatment                         |                 |                    |
++----------------------+-----------------------------------+-----------------+--------------------+
+| Cervix dilatation at | Cervical dilatation (cm) at the   | Cat             |                    |
+| start of epidural    | start of epidural analgesia, as   |                 |                    |
+| analgesia            | recorded; number and percentage   |                 |                    |
+|                      | of women by centimetre (1–10 cm,  |                 |                    |
+|                      | not recorded), by treatment.      |                 |                    |
+|                      | Epidural analgesia is the only    |                 |                    |
+|                      | method of medical pain relief     |                 |                    |
+|                      | with a recorded cervical          |                 |                    |
+|                      | dilatation                        |                 |                    |
++----------------------+-----------------------------------+-----------------+--------------------+
+| Cervix dilatation at | Cervical dilatation (cm) at the   | Cat             |                    |
+| induction of labour  | start of induction of labour, as  |                 |                    |
+|                      | recorded; number and percentage   |                 |                    |
+|                      | of women by centimetre (1–10 cm,  |                 |                    |
+|                      | not recorded), by treatment among |                 |                    |
+|                      | the women induced                 |                 |                    |
++----------------------+-----------------------------------+-----------------+--------------------+
+| Type of continuous   | - Continuous external CTG         | Cat             |                    |
+| fetal monitoring     |                                   |                 |                    |
+|                      | - STAN/continuous internal CTG    |                 |                    |
++----------------------+-----------------------------------+-----------------+--------------------+
+| Type of perineal     | Perineal support technique used:  | Cat             |                    |
+| support              | Ritgen or modified Ritgen         |                 |                    |
+|                      | manoeuvre, or supporting          |                 |                    |
+|                      | flat-hand grip (vaginal           |                 |                    |
+|                      | deliveries with perineal support) |                 |                    |
++----------------------+-----------------------------------+-----------------+--------------------+
+| Occurrence of        | Any occurrence of post-partum     | Cat             |                    |
+| post-partum          | haemorrhage \>500 ml, \>1000 ml,  |                 |                    |
+| haemorrhage          | \>1500 ml                         |                 |                    |
++----------------------+-----------------------------------+-----------------+--------------------+
+| Occurrence of        | Occurrence of prolonged labour    | D               |                    |
+| prolonged labour     | defined as:                       |                 |                    |
+|                      |                                   |                 |                    |
+|                      | **WHO partograph:**               |                 |                    |
+|                      |                                   |                 |                    |
+|                      | First stage:                      |                 |                    |
+|                      |                                   |                 |                    |
+|                      | Crossing of the action line       |                 |                    |
+|                      |                                   |                 |                    |
+|                      | Second stage:                     |                 |                    |
+|                      |                                   |                 |                    |
+|                      | 2\. stage lasting from 2-4 hours, |                 |                    |
+|                      | depending on the labour wards     |                 |                    |
+|                      | guidelines                        |                 |                    |
+|                      |                                   |                 |                    |
+|                      | **LCG:**                          |                 |                    |
+|                      |                                   |                 |                    |
+|                      | First stage:                      |                 |                    |
+|                      |                                   |                 |                    |
+|                      | Time intervals exceeded           |                 |                    |
+|                      |                                   |                 |                    |
+|                      | Second stage:                     |                 |                    |
+|                      |                                   |                 |                    |
+|                      | Time intervals exceeded           |                 |                    |
++----------------------+-----------------------------------+-----------------+--------------------+
+| Shared decision      | Shared decision making is         | D+Cat           | ?                  |
+| making               | assessed in selected situations   |                 |                    |
+|                      | and interventions and documented  |                 |                    |
+|                      | by the midwife                    |                 |                    |
+|                      |                                   |                 |                    |
+|                      | Were positions during the         |                 |                    |
+|                      | dilation phase decided in         |                 |                    |
+|                      | consultation with the woman? Yes  |                 |                    |
+|                      | or no                             |                 |                    |
+|                      |                                   |                 |                    |
+|                      | Was the birthing position decided |                 |                    |
+|                      | in consultation with the woman?   |                 |                    |
+|                      | Yes or no                         |                 |                    |
+|                      |                                   |                 |                    |
+|                      | Pain relief:                      |                 |                    |
+|                      |                                   |                 |                    |
+|                      | Was the woman involved in the     |                 |                    |
+|                      | choice of pain relief method? Yes |                 |                    |
+|                      | or no                             |                 |                    |
+|                      |                                   |                 |                    |
+|                      | Did she agree with the chosen     |                 |                    |
+|                      | pain relief method? Yes, no, not  |                 |                    |
+|                      | asked or not answered             |                 |                    |
+|                      |                                   |                 |                    |
+|                      | Prolonged labour:                 |                 |                    |
+|                      |                                   |                 |                    |
+|                      | Was a plan established for        |                 |                    |
+|                      | managing prolonged labour? Yes or |                 |                    |
+|                      | no                                |                 |                    |
+|                      |                                   |                 |                    |
+|                      | Was the woman involved in the     |                 |                    |
+|                      | discussion about the plan? Yes or |                 |                    |
+|                      | no                                |                 |                    |
+|                      |                                   |                 |                    |
+|                      | Was the plan documented           |                 |                    |
+|                      | continuously? Yes or no           |                 |                    |
+|                      |                                   |                 |                    |
+|                      | Did the woman agree with the      |                 |                    |
+|                      | chosen plan? Yes, no, not asked   |                 |                    |
+|                      | or not answered                   |                 |                    |
+|                      |                                   |                 |                    |
+|                      | Other: (with the response         |                 |                    |
+|                      | options: yes, no, not asked, and  |                 |                    |
+|                      | no answer)                        |                 |                    |
+|                      |                                   |                 |                    |
+|                      | External CTG, internal CTG/STAN,  |                 |                    |
+|                      | vaginal examination by midwife,   |                 |                    |
+|                      | vaginal examination if new        |                 |                    |
+|                      | midwife, vaginal examination by   |                 |                    |
+|                      | obstetrician, amniotomy, oxytocin |                 |                    |
+|                      | infusion, episiotomy, operative   |                 |                    |
+|                      | delivery, oxytocin IM/IV          |                 |                    |
+|                      | prophylaxis postpartum and        |                 |                    |
+|                      | vitamin K IM.                     |                 |                    |
++----------------------+-----------------------------------+-----------------+--------------------+
+| Supportive care,     | Labour companionship during       | Cat             |                    |
+| labour companionship | labour as recorded by the         |                 |                    |
+|                      | midwife, including partner,       |                 |                    |
+|                      | multicultural doula, doula,       |                 |                    |
+|                      | family, friend, nobody            |                 |                    |
++----------------------+-----------------------------------+-----------------+--------------------+
+
+#### Main Analytical Approach for Dichotomous Efficacy Endpoints {#sec-main-analytical-approach-for}
+
+Dichotomous endpoints are analysed as the primary endpoint (@sec-main-analytical-approach): a
+generalised linear mixed model (binomial family, logit link) with a random intercept for cluster and
+fixed effects for treatment, time interval and the covariates specified for the endpoint, with the
+absolute and relative differences obtained by G-computation integrating over the random cluster
+effect and standard errors by the delta method. Covariates are specified per endpoint after the
+blinded data review (@sec-adjustment-for-covariates). Endpoints restricted to vaginal births are
+analysed in the vaginal delivery set, all others in the primary analysis set (@sec-analysis-sets).
+Missing data are handled as given in the "Handling of missing data" column of the endpoint tables.
+
+The differences are presented with two-sided 95% confidence intervals, not adjusted for
+multiplicity (@sec-multiplicity-adjustment). No hypothesis tests are performed and no
+non-inferiority margin applies to secondary endpoints.
+
+Covariate sets by endpoint:
+
+- Spontaneous vaginal delivery and instrumental vaginal delivery: as for the primary endpoint
+  (@sec-adjustment-for-covariates). Mode of delivery is classified as spontaneous vaginal,
+  instrumental vaginal or caesarean section, so the three differences sum to zero. The difference in
+  caesarean sections in the primary analysis set, including those at 4 cm, is supplementary analysis
+  1 of the primary estimand (@sec-supplementary-analysis).
+
+- Occurrence of amniotomy during labour: as for the primary endpoint.
+
+- Use of oxytocin during labour: as for the primary endpoint.
+
+- Use of epidural analgesia during labour: as for the primary endpoint.
+
+- Use of medical pain relief in labour: as for the primary endpoint.
+
+- Intermittent fetal monitoring: as for the primary endpoint.
+
+- Continuous fetal monitoring: as for the primary endpoint.
+
+- Occurrence of perineal support: as for the primary endpoint.
+
+- Episiotomy: as for the primary endpoint.
+
+- Occurrence of postpartum haemorrhage > 1000 ml: as for the primary endpoint.
+
+- Arterial umbilical cord pH < 7.00: as for the primary endpoint.
+
+- Apgar score < 7 at 5 minutes: as for the primary endpoint.
+
+- Admittance to neonatal intensive care unit within 2 hours: as for the primary endpoint.
+
+Missing values of occurrence of perineal support (not recorded for 4,014 women in the vaginal
+delivery set, 11.9%, at the blinded review) are handled by multiple imputation under a
+missing-at-random assumption, using fully conditional specification (chained equations) with 20
+imputed datasets. The imputation model contains all variables of the analysis model (treatment,
+time interval, hospital as a fixed effect and the covariates) and the auxiliary variables mode of
+vaginal delivery (spontaneous, vacuum, forceps), degree of perineal tear and episiotomy; missing
+values of the auxiliary variables are imputed in the same process. The analysis of
+@sec-main-analytical-approach is applied to each imputed dataset, and the estimates and their
+variances are combined by Rubin's rules.
+
+Arterial umbilical cord pH was not recorded for 27.5% of the first-born babies at the blinded
+review (venous pH only for 5,321 women, no cord blood gas for 4,699). The investigators consider the
+missing values unrelated to the condition of the baby (missing completely at random). Multiple
+imputation is used nevertheless, because it recovers information from the venous pH and remains
+valid if missingness depends on the auxiliary variables. When no baby of a woman has a
+measured arterial pH, the arterial pH of the first-born baby is imputed by multiple imputation under
+a missing-at-random assumption (fully conditional specification with predictive mean matching, 30
+imputed datasets) and dichotomised at 7.00. The imputation model contains all variables of the
+analysis model (treatment, time interval, hospital as a fixed effect and the covariates) and the
+auxiliary variables venous cord pH, arterial and venous base excess or deficit, Apgar scores at 1
+and 5 minutes, admission to the neonatal intensive care unit within 2 hours and mode of delivery.
+For multiple births with at least one measured baby, the endpoint is taken from the measured
+babies. Estimates are combined by Rubin's rules. Arterial and venous pH values outside 6.5–7.8
+have been referred to the data managers for checking against the source records.
+
+#### Main Analytical Approach for Ordinal Efficacy Endpoints {#sec-main-analytical-approach-for-ordinal}
+
+Ordinal endpoints (degree of perineal tears) are analysed with a proportional-odds (cumulative
+logit) generalised linear mixed model with a random intercept for cluster and fixed effects for
+treatment, time interval and the covariates of the primary endpoint
+(@sec-adjustment-for-covariates). The common cumulative odds ratio is presented with a Wald 95%
+confidence interval. In addition, the marginal probability of each category under the LCG and under
+the WHO partograph is obtained by G-computation, integrating over the random cluster effect as in
+@sec-main-analytical-approach, and the absolute difference in the probability of a third- or
+fourth-degree tear (obstetric anal sphincter injury) is presented with a two-sided 95% confidence
+interval (delta method).
+
+Missing data are handled as given in the endpoint table (complete-case analysis for degree of
+perineal tears).
+
+#### Main Analytical Approach for Time to Event Efficacy Endpoints {#sec-main-analytical-approach-for-time-to}
+
+<!-- COMMENT Maria Cecilie Stivang (2026-09-25): Siden denne SAP ikke skal inneholde progression fra en cm til neste, så skal vel dette tas bort. [2026-09-29: labour progression section removed; the labour-curve model is kept only to impute the time of reaching 4 cm] -->
+
+Time from 4 cm cervical dilatation to vaginal delivery is analysed as the time without vaginal
+delivery during the first 36 hours after 4 cm, in the primary analysis set including the caesarean
+sections at 4 cm (@sec-estimands-for-secondary-objectives). For each woman, let T be the time from
+4 cm to delivery (the birth of the first baby for multiple births). The analysis variable is
+Y = min(T, 36 h) after a vaginal delivery (spontaneous or instrumental) and Y = 36 h after a
+caesarean section, whenever it occurs. Mode of delivery is the most operative across the babies
+(@sec-definition-of-endpoint-s), so a caesarean section for a second twin counts as a caesarean
+section.
+
+The mean of Y is the restricted mean time without vaginal delivery: 36 hours minus the area under
+the cumulative incidence curve of vaginal delivery up to 36 hours (Andersen 2013). The summary
+measure is the difference in mean Y between the LCG and the WHO partograph, in hours; negative
+values favour the LCG. Caesarean section is handled by a composite strategy
+(@sec-estimands-for-secondary-objectives), so the estimand is the total effect of the LCG on
+reaching a vaginal delivery over time, including any effect through caesarean section (Young et al.
+2020). It is not the restricted mean survival time from a Kaplan–Meier estimator with caesarean
+sections censored: that targets a hypothetical setting without caesarean section and requires
+caesarean section to be independent of the time a woman would have taken to deliver vaginally,
+which is implausible when caesarean sections are indicated by slow progress (Andersen and Keiding
+2012).
+
+The horizon of 36 hours is longer than virtually all times to vaginal delivery (at the blinded
+review, among the women with an examination at 4 cm, 1.8% of the times from 4 cm to delivery
+exceeded 24 hours and 0.2% exceeded 36 hours), so that a vaginal delivery is almost never truncated
+and a caesarean section counts as at least as unfavourable as the longest labours ending in a
+vaginal delivery. Beyond the vaginal deliveries, the horizon sets the weight given to a caesarean
+section: with a mean time from 4 cm to vaginal delivery of about 8 hours, a difference of one
+percentage point in caesarean sections changes the summary measure by about 0.3 hours. Horizons of
+24 and 48 hours are supplementary analyses (@sec-supplementary-analyses).
+
+There is no censoring: every woman is followed until delivery, whose time is recorded for all women
+in the analysis set (it defines the time interval, @sec-analysis-sets). A caesarean section
+contributes 36 hours whatever the time of reaching 4 cm, so time zero is needed only for vaginal
+deliveries. Time zero is the vaginal examination at which 4 cm cervical dilatation was found. The
+trial database records, for each centimetre, the time of the examination at which it was found, and
+at the blinded review no examination found exactly 4 cm for 57% of the women (the first examination
+at 4 cm or more found 5–10 cm), and about half of the women had no examination below 4 cm. For
+women who deliver vaginally without an examination at 4 cm, the time of reaching 4 cm is multiply
+imputed from a labour-curve model fitted to the vaginal deliveries. Following Zhang et al. (2002,
+2010), who constructed labour curves from repeated cervical examinations with time measured
+backwards from the end of labour because the onset of labour is poorly defined, the logarithm of
+the time from each examination to delivery is modelled as a natural cubic spline of the dilatation
+found (3 degrees of freedom), with a random intercept and slope per woman, fixed effects for
+treatment, the interaction of treatment with dilatation, time interval, hospital and the covariates
+of the primary endpoint, and a single residual variance. For each woman, the time of reaching 4 cm
+is drawn from her predictive distribution given her own examinations, truncated to lie between her
+last examination below 4 cm (if any) and her first examination at 4 cm or more, with the model
+parameters drawn anew for each of 30 imputed datasets. A vaginal delivery more than 36 hours after
+the observed or imputed time of reaching 4 cm contributes 36 hours. In a blinded validation of the
+same imputation at 5 cm, which masked observed examinations, it removed most of the bias of taking
+the first examination at or above the threshold as time zero (2.9–4.9 hours too short).
+
+Because Y is known for every woman once time zero is imputed, the summary measure is estimated as a
+difference in means, without a model for the distribution of the times. Y is analysed with a linear
+mixed model with a random intercept for cluster and fixed effects for treatment, time interval and
+the covariates of the primary endpoint (@sec-adjustment-for-covariates). With the identity link, the
+treatment coefficient is the marginal difference in mean Y, and no G-computation is needed. Y is
+not normally distributed (it has a point mass at 36 hours from the caesarean sections); the estimate
+does not rely on normality, and with more than 30,000 women the confidence interval relies on the
+central limit theorem. The model is fitted to each of the 30 imputed datasets, and the estimates and
+their model-based variances are combined by Rubin's rules. The difference is presented with a
+two-sided 95% confidence interval; no hypothesis test is performed (@sec-main-analytical-approach-for).
+
+To show whether a difference comes from caesarean sections or from the duration of labour, two
+components are presented: the difference in the probability of vaginal delivery, which is minus the
+difference in caesarean sections in the primary analysis set including those at 4 cm
+(supplementary analysis 1 of the primary estimand, @sec-supplementary-analysis), and the difference
+in the mean of min(T, 36 h) among women who deliver vaginally, from the same model in the vaginal
+delivery set. The latter conditions on vaginal delivery and is not interpreted as a treatment effect
+on its own (@sec-estimands-for-secondary-objectives).
+
+As supportive analyses, the cumulative incidence of vaginal delivery by time since 4 cm is shown for
+each treatment (averaged over the imputed datasets; descriptive, not adjusted for time interval), and
+the differences in the proportion of women delivered vaginally within 6 and within 12 hours of 4 cm
+are estimated as for the dichotomous endpoints (@sec-main-analytical-approach-for) in each imputed
+dataset and combined by Rubin's rules.
+
+#### Sensitivity Analyses  {#sec-sensitivity-analyses-1}
+
+<!-- COMMENT Stine Bernitz (2025-10-15): Are we sure? -->
+<!-- COMMENT Inge Christoffer Olsen (2025-11-27): We can see once we start blindly anlaysing the data if we need some sensitivity analyses -->
+
+For time from 4 cm cervical dilatation to vaginal delivery, two sensitivity analyses keep the
+estimand and vary the model of @sec-main-analytical-approach-for-time-to:
+
+1)  Unadjusted model: treatment, time interval and random cluster effect only.
+
+2)  Fixed cluster effects with robust standard errors: hospital as a fixed effect instead of a random
+    effect, with heteroscedasticity-consistent (HC3) standard errors, which do not assume a constant
+    residual variance. The variance of Y depends strongly on the risk of caesarean section because of
+    the point mass at 36 hours.
+
+There will be no sensitivity analyses for the other secondary endpoints.
+
+#### Supplementary Analyses  {#sec-supplementary-analyses}
+
+For the endpoints analysed in the vaginal delivery set (occurrence of perineal support, episiotomy,
+degree of perineal tears), a supplementary analysis uses a composite strategy in the primary
+analysis set, counting a caesarean section as no event (no perineal support, no episiotomy, no
+tear) (@sec-estimands-for-secondary-objectives).
+
+For occurrence of amniotomy, use of oxytocin and use of epidural analgesia during labour,
+supplementary analyses count any amniotomy, oxytocin infusion or epidural analgesia, whatever the
+cervical dilatation at which it was performed or started, including amniotomy and oxytocin used for
+induction of labour. These analyses include the women excluded from the main analysis because the
+intervention was performed or started before 4 cm.
+
+For time from 4 cm cervical dilatation to vaginal delivery, supplementary analyses restrict the time
+without vaginal delivery to the first 24 and to the first 48 hours after 4 cm instead of 36 hours,
+with the analysis of @sec-main-analytical-approach-for-time-to. The horizon sets the weight given to
+a caesarean section, so each horizon defines a different estimand.
+
+# Analyses Supporting Exploratory Objectives {#sec-analyses-supporting-exploratory}
+
+Hypothesis generating exploratory analyses will be performed on exploratory endpoints. These
+analyses will not be detailed in this analysis plan and will be regarded as post-hoc analyses.
+
+Descriptive endpoint, especially categorical endpoints may be presented descriptively in the main
+statistical report. The cervical dilatation at amniotomy, at the start of oxytocin infusion, at the
+start of epidural analgesia and at induction of labour is presented as the number and percentage of
+women by centimetre (1–10 cm, not recorded), by treatment
+(@sec-definition-of-descriptive-or). Epidural analgesia is the only method of medical pain relief
+with a recorded cervical dilatation.
+
+The pre-specified subgroup analysis is described in @sec-subgroup-analyses.
+
+# \[Other\] Safety Analyses {#sec-safety-analyses}
+
+<!-- COMMENT Inge Christoffer Olsen (2025-06-04): I assume there will be no safety analyses? -->
+
+<!-- CPT guidance (template text, not part of the SAP):
+This information should be copied from the protocol (Section 9.6). Additional details may be added.
+
+Consider describing how standard and any special safety endpoints analyses that have not already
+been described in Sections 4, 5 or 6 will be performed.
+
+Suggested topics, specific to safety analyses to be included in this section or subsections, are
+provided below. If potentially clinically significant criteria are used for adverse events (AEs),
+laboratory assessments, vital signs, or electrocardiograms (ECGs), then describe how these criteria
+are determined and how they relate to clinical relevance or include a reference to standards,
+appendix, or other documentation.
+
+> \- Specify estimand(s), if applicable and not defined in Section 1.1.
+
+> \- Specify analysis set(s) to be used if not clear from Section 3.
+
+> \- Describe general methods for summarizing and analyzing safety data.
+
+> \- Include special safety topics relevant to the given study.
+
+> \- Specify how to handle unscheduled visits and/or duplicate measurements.
+
+> \- If running categorical analyses for participants with a potentially clinically significant
+> change, describe criteria in the appendix or refer to referenced documentation or standards.
+
+> \- For categorical analyses, describe in detail the participants in the denominator and numerator.
+> Pay particular attention to baseline requirements for denominators. For instance, to assess who
+> goes high, usually participants need to be low or normal at baseline. Specify whether baseline
+> includes all baseline visits, just the last baseline visit, or some other criteria.
+
+> \- Describe methods used to compute any derived data, eg, reporting absolute change or percent
+> change from baseline, transformation of data, or use of categorical cut-points for safety scales.
+-->
+
+## Extent of Exposure {#sec-extent-of-exposure}
+
+<!-- COMMENT Inge Christoffer Olsen (2025-06-04): We should probably write or suggest parameters describing the exposure, e.g. how well the LCG has been followed. -->
+<!-- COMMENT Maria Cecilie Stivang (2025-09-25): I suggest this to be discussed in the research group. -->
+<!-- COMMENT Stine Bernitz (2025-10-15): Agree with Maria, we need to discuss -->
+
+<!-- CPT guidance (template text, not part of the SAP):
+Describe the summaries that will be provided for extent of exposure to investigational
+intervention, which may include the number of participants exposed, the duration of exposure, the
+dose(s) to which they were exposed, and dose modifications.
+-->
+
+<!-- CPT guidance (template text, not part of the SAP):
+If applicable, also describe how to calculate the total daily dose, total years of exposure, etc.
+-->
+
+<!-- CPT guidance (template text, not part of the SAP):
+The wording should be adjusted to account for oral agents, infusions, injections, or other nonoral
+administrations.
+-->
+
+<!-- CPT guidance (template text, not part of the SAP):
+If applicable, duration of exposure to any other study interventions can be summarized with
+descriptive statistics.
+-->
+
+<!-- CPT guidance (template text, not part of the SAP):
+It might also be helpful to describe the number of participants exposed for specified periods of
+time, such as for 1 day or less, 2 days to 1 week, more than 1 week to 1 month, more than 1 month
+to 6 months.
+-->
+
+## Adverse Events {#sec-adverse-events}
+
+<!-- COMMENT Inge Christoffer Olsen (2025-06-04): Not applicable? -->
+<!-- COMMENT Stine Bernitz (2025-10-15): Adverse events are recorded but not as a mandatory action according to the health authorities -->
+
+<!-- CPT guidance (template text, not part of the SAP):
+Suggested topics to be included in this section or as subsections are provided below:
+
+> \- The summaries that will be presented, such as overall, by investigational intervention
+> relationship, by intensity/grade, by special interest, or by study period, and with reported terms
+> being mapped to preferred terms according to dictionary
+
+> \- Methods to be used for analysis of AEs such as relative risk, exposure-adjusted incidence rate
+
+> \- Details on how treatment-emergent AEs are defined
+
+> \- Description of whether counts (proportions) of participants and/or counts (rates) of events
+> will be summarized
+
+> \- Presentation of AEs from coding, such as summarizing by primary system organ class and
+> preferred term
+
+> \- Presentation of fatal serious AEs (SAEs) and nonfatal SAEs
+
+> \- Presentation of AEs leading to discontinuation of investigational intervention and/or
+> withdrawal from the study
+
+> \- Presentation of other significant AEs, if applicable
+-->
+
+## Additional Safety Assessments {#sec-additional-safety-assessments}
+
+<!-- COMMENT Inge Christoffer Olsen (2025-06-04): Not applicable? -->
+
+<!-- CPT guidance (template text, not part of the SAP):
+Add other sections such as Laboratory Data, Vital Signs, and ECGs, if applicable to the study.
+Delete this section if it is not applicable.
+-->
+
+# Other Analyses {#sec-other-analyses}
+
+<!-- CPT guidance (template text, not part of the SAP):
+This information will be copied directly from the Other Analyses section of the protocol (Section
+9.7). Additional details may be added.
+-->
+
+## Other Variables and/or Parameters {#sec-other-variables-and-or-parameters}
+
+<!-- COMMENT Inge Christoffer Olsen (2025-06-04): Anything? -->
+
+Not applicable
+
+<!-- CPT guidance (template text, not part of the SAP):
+Other analyses may include analyses of assessments or derived parameters, which are
+not defined as endpoints but need to be prespecified in either the protocol or the SAP. Examples
+include but are not limited to immunogenicity, biomarkers, PK/PD/population PK parameters, health
+care utilization variables, and health technology assessment-related variables. State if these will
+be reported in a separate document.
+
+Subsections may be used for different topics.
+
+It is recommended that the variables used in the analyses should be clearly defined and the analyses
+should be described at the same level of detail as supportive secondary endpoints being described in
+Section 5.1.2 of the SAP.
+
+The definition and derivation may be specified in a table format.
+
+Specify estimands not defined in Section 1.1 of the SAP, if applicable.
+-->
+
+## Subgroup Analyses {#sec-subgroup-analyses}
+
+One exploratory subgroup analysis is prespecified, for the primary endpoint by Robson group (Ten
+Group Classification System). The model of @sec-main-analytical-approach is extended with a
+treatment × Robson group interaction, and the absolute risk difference is estimated within each
+group by G-computation over the women of that group, with two-sided 95% confidence intervals
+(delta method). Heterogeneity is assessed by a likelihood-ratio test of the interaction. Robson
+groups with fewer than 50 intrapartum caesarean sections in the analysis set (both periods
+together, known before unblinding) are combined into one group. The results are exploratory, not
+adjusted for multiplicity, and no non-inferiority conclusion is drawn within subgroups.
+Hospital-level characteristics (hospital, annual number of deliveries, intrapartum caesarean
+section rate) are not used for subgroup analyses: with ten clusters, each subgroup would contain
+only a few hospitals.
+
+If there are indications of intervention-modifying baseline variables, further subgroup analyses may
+be included as exploratory analyses.
+
+# Interim Analyses {#sec-interim-analyses}
+
+There will be no interim analyses.
+
+# Changes to Protocol-planned Analyses {#sec-changes-to-protocol-planned-analyses}
+
+<!-- COMMENT Inge Christoffer Olsen (2025-06-04): To be revised after we have finished the SAP -->
+
+**Primary hypothesis.** The protocol describes a non-inferiority approach in its design section but
+calculates the sample size for equivalence. This SAP specifies non-inferiority, with a margin of 1.5
+percentage points for the absolute risk difference (@sec-statistical-hypotheses-and-conclusion). The
+decision was made on 11 September 2026, before database lock and without access to unblinded data;
+it does not reduce the power of the planned sample size (@sec-sample-size-determination).
+
+<!-- CPT guidance (template text, not part of the SAP):
+The purpose of this section is to document changes from the planned analyses specified in the
+protocol. The changes themselves should be incorporated into the relevant sections of this document.
+
+This section may be included in the first version of the SAP, ie, not an amendment, if such changes
+were decided after the initial protocol was finalized. If this section is part of an SAP amendment,
+then there will be some overlap with the information presented in this section and the version
+history. Additional justifications may be provided in this section (eg, for regulatory reasons).
+Changes made after database lock are out of scope for the SAP.
+
+If there are changes to protocol-planned analyses that were not documented in the final protocol or
+latest protocol amendment at the time of SAP development, summarize these important changes with
+rationale, according to ICH E3, Section 9.8. Additional analyses that do not replace planned
+analyses, or clarifications are not considered changes. If there were no important changes to the
+protocol-planned analyses, write "Not applicable."
+-->
+
+# Sample Size Determination {#sec-sample-size-determination}
+
+Our power calculation is based on the average rate of intrapartum caesarean section of 10.5 % in the
+NORBIRTH network. If the 95% confidence interval of the difference in the proportions of caesarean
+section between the LCG and the WHO partograph lies completely within -delta to +delta margins of
+equivalence, then the two treatments are considered equivalent. With a power of 80%, a significance
+level (alpha) of 5% and a delta margin of equivalence of ± 1.5 percentage points, the analysis need
+to include 23 650 women considered the cluster effect and an estimated intraclass correlation
+coefficient (ICC) of approximately 0.0001 as described by Henrichs et al. (19). Within the NORBIRTH
+network approximately 28.950 women use a partograph each year. To secure a sufficient number of
+individuals in the analyses, the inclusion period is estimated to last for one year and two months
+(60 weeks). Each hospital will cross from WHO partograph to the LCG at equal time intervals until
+all hospitals have crossed, which corresponds to five weeks per step taken into account a normal variation of annual deliveries and potential opt outs.
+
+The primary hypothesis is non-inferiority (@sec-statistical-hypotheses-and-conclusion). The sample
+size above was calculated for equivalence with the same margin, i.e. for two one-sided tests. The
+non-inferiority test is one of these, so its power is at least that of the equivalence calculation,
+and the trial is, if anything, over-powered for the non-inferiority claim. The number of women
+included also exceeds the planned 23 650.
+
+# Supporting Documentation {#sec-supporting-documentation}
+
+<!-- COMMENT Inge Christoffer Olsen (2025-06-04): We can specify the two first at least. Meaning defining the tables. -->
+
+<!-- CPT guidance (template text, not part of the SAP):
+The subsections within this section are recommended to be named Appendix XXX in line with the CPT.
+
+The appendix/appendices can include important information not included in the body text of the SAP,
+for example:
+
+> \- Participant disposition
+
+> \- Baseline characteristics and demographics
+
+> \- Protocol deviations
+
+> \- Medical history
+
+> \- Prior/concomitant/follow-up medications (including dictionary)
+
+> \- Data derivation rules
+
+> \- Adverse events of special interest
+
+> \- Potentially clinically significant criteria for safety endpoints
+-->
+
+## Other objectives and endpoints specified in the protocol, detailed elsewhere {#sec-other-objectives-and-endpoints-detailed}
+
+<!-- COMMENT Maria Cecilie Stivang (2026-09-23): Inge: Det er uklart hvorfor noen endepunkter er med i denne tabellen, men ikke alle. Eks. main reason for amniotomy, men ikke main reason for oxytocin. Vi har flere ting vi ønsker å sette inn her, som skal detaljeres i andre SAPer. Noen grunn til å ikke gjøre det? [2026-09-29: table as edited by the investigators in v0.82; completeness against the protocol to be confirmed by them] -->
+<!-- COMMENT Therese Buerengen (2026-09-25): Vi sjekker opp i mot protokoll. Alle fra protokollen bør stå her, andre kan beskrives i andre SAP`er [2026-09-29: heading changed accordingly] -->
+<!-- COMMENT Maria Cecilie Stivang (2026-09-25): I protokoll står morbidity. Kan vi ha med mortality allikevel? [2026-09-29: open, for the investigators (neonatal SAP)] -->
+<!-- COMMENT Maria Cecilie Stivang (2026-09-25): Hovedartikkel og protokoll har ph under 7. Skal se på ulike ph-verdier over 7 i artikkel nyfødt. Ta bort herfra, og bare ha i SAP nyfødt? [2026-09-29: kept here as an endpoint of the neonatal SAP; arterial pH < 7.00 remains a secondary endpoint of this SAP] -->
+
++---------------------------------------------+----------------------------------------------------+
+| Objectives                                  | Endpoints                                          |
++=============================================+====================================================+
+| Secondary                                   |                                                    |
++---------------------------------------------+----------------------------------------------------+
+| - To investigate the woman's experience     | - Total and mean scores of the four domains (Own   |
+|   with the LCG in women with a planned      |   capacity, Professional support, Perceived safety |
+|   vaginal delivery                          |   and Participation) of the Childbirth Experience  |
+|                                             |   Questionnaire (CEQ2)                             |
++---------------------------------------------+----------------------------------------------------+
+| - To investigate the effect of LCG in women | - Total dosage of oxytocin                         |
+|   with a planned vaginal delivery           |                                                    |
++---------------------------------------------+----------------------------------------------------+
+|                                             | - Maximum dosage of oxytocin                       |
++---------------------------------------------+----------------------------------------------------+
+|                                             | - Total duration of oxytocin                       |
++---------------------------------------------+----------------------------------------------------+
+|                                             | - Initiation of oxytocin                           |
++---------------------------------------------+----------------------------------------------------+
+|                                             | - Total duration of epidural analgesia             |
++---------------------------------------------+----------------------------------------------------+
+|                                             | - Use of non-medical pain relief in labour         |
++---------------------------------------------+----------------------------------------------------+
+|                                             | - Occurrence of continuous support in labour       |
++---------------------------------------------+----------------------------------------------------+
+|                                             | - Occurrence of perineal tears                     |
++---------------------------------------------+----------------------------------------------------+
+|                                             | - Total estimated blood loss                       |
++---------------------------------------------+----------------------------------------------------+
+|                                             | - Occurrence of postpartum blood transfusion       |
++---------------------------------------------+----------------------------------------------------+
+|                                             | - Labour progression: time from one centimetre to  |
+|                                             |   the next, starting at 5 cm, until 10 cm          |
++---------------------------------------------+----------------------------------------------------+
+|                                             | - Time related aspects of labour duration          |
++---------------------------------------------+----------------------------------------------------+
+|                                             | - Breastfeeding at discharge                       |
++---------------------------------------------+----------------------------------------------------+
+| - To investigate the effect of LCG on the   | - Apgar scores at 1, 5 and 10 minutes              |
+|   neonate                                   |                                                    |
++---------------------------------------------+----------------------------------------------------+
+|                                             | - Neonatal ~~morbidity~~ [mortality]{.underline}   |
+|                                             |   occurring during active labour                   |
++---------------------------------------------+----------------------------------------------------+
+|                                             | - Occurrence of neonatal metabolic acidosis        |
+|                                             |   (arterial umbilical cord pH \< 7 and BE ≤ -12 or |
+|                                             |   BD ≥ 12)                                         |
++---------------------------------------------+----------------------------------------------------+
+|                                             | - Arterial umbilical cord pH                       |
++---------------------------------------------+----------------------------------------------------+
+|                                             | - Occurrence of undisturbed skin-to-skin contact   |
+|                                             |   [for at least one]{.underline} ~~within two~~    |
+|                                             |   hour~~s~~ after birth                            |
++---------------------------------------------+----------------------------------------------------+
+|                                             | - Breastfeeding within two hours after birth       |
++---------------------------------------------+----------------------------------------------------+
+|                                             | - The use of formula milk                          |
++---------------------------------------------+----------------------------------------------------+
+| - Exploratory                               |                                                    |
++---------------------------------------------+----------------------------------------------------+
+| - To describe and explore the effect of LCG | - Fetal presentation at time of delivery           |
+|   in women with a planned vaginal delivery  |                                                    |
++---------------------------------------------+----------------------------------------------------+
+|                                             | - Fetal position at time of delivery               |
++---------------------------------------------+----------------------------------------------------+
+|                                             | - Initiation of epidural analgesia                 |
++---------------------------------------------+----------------------------------------------------+
+|                                             | - Birthing position                                |
++---------------------------------------------+----------------------------------------------------+
+|                                             | - Women's childbirth experiences through           |
+|                                             |   qualitative interviews                           |
++---------------------------------------------+----------------------------------------------------+
+| - To describe and explore the effect of LCG | - Timing of cord clamping                          |
+|   on the neonate                            |                                                    |
++---------------------------------------------+----------------------------------------------------+
+|                                             | - Occurrence of neonatal morbidity defined as      |
+|                                             |   reasons for admittance to neonatal intensive     |
+|                                             |   unit within 2 hours after birth                  |
++---------------------------------------------+----------------------------------------------------+
+| - To describe and explore the use of LCG    | - Health care providers experiences with using the |
+|   from the health care providers            |   LCG in clinical practice through a survey and    |
+|   perspective                               |   through qualitative interviews                   |
++---------------------------------------------+----------------------------------------------------+
+
+## Data derivations {#sec-data-derivations}
+
+<!-- COMMENT Therese Buerengen (2026-09-25): Holder det at "obstetric unit characteristics" som antall fødsler pr år står beskrevet under punktet om randomisering eller bør den med her? Er med i tabell 1 i hovedartikkelen [2026-09-29: added to the table] -->
+<!-- COMMENT Therese Buerengen (2026-09-22): Vi har med first vaginal delivery i tabell 1 i hovedartikkelen, skal den med her? Ikke egen variabel i datasettet, finner den fra andre variabler. [2026-09-29: added, derived from parity and previous caesarean section] -->
+<!-- COMMENT Therese Buerengen (2026-09-22): INTERGROWTH-21st? R: IntergrowthSGA [2026-09-29: reference standard for birthweight percentiles to be decided with the investigators] -->
+<!-- COMMENT Therese Buerengen (2026-09-22): Vi har med birthweight percentiles by GA i tabell 1 i hovedartikkelen. Med her? Ikke egen variabel i datasettet, regnes ut fra fødselsvekt og GA. [2026-09-29: added to the baseline table (not used for adjustment)] -->
+
+Derivation of covariates and baseline characteristics from the trial database (variable names as in
+the data export). For multiple births, neonatal characteristics refer to the first-born twin.
+
+| Characteristic | Source variable(s) | Derivation |
+|----|----|----|
+| Annual number of deliveries | `metadata/hospitals.csv` (births per year at the hospital) | 1000–1999, 2000–3999, ≥ 4000 |
+| Contractions at admission | `antall_rier_10min_innkomst` | Number of contractions per 10 minutes at admission |
+| Maternal age | `alder` | Age at the time of delivery in completed years (from date of birth), as recorded |
+| Country of origin | `landbakgrunn` | Grouped by continent (country-to-continent lookup) |
+| Married or cohabiting | `sivilstatus` | Married (`gift`) or cohabiting (`samboer`) vs other |
+| Higher education | `utdanning` | University or college (`hoyere_utdanning`) vs lower |
+| Height | `hoyde` | cm |
+| Pre-pregnancy weight | `pregravid_vekt` | kg |
+| Pre-pregnancy BMI | `hoyde`, `pregravid_vekt` | weight (kg) / height (m)^2^ |
+| Smoking | `royk_for_eller_i_sv_s` | Smoking before or during pregnancy |
+| Snuff use | `snus_for_eller_i_sv_s` | Snuff use before or during pregnancy |
+| Medically treated diabetes | `hvilke_kjente_pregravide_sykdommer`, `hvilke_svangerskapsrelaterte_sykdommer` | Type 1 or type 2 diabetes, or gestational diabetes treated with metformin or insulin |
+| Hypertensive disorders | as above | Chronic hypertension, gestational hypertension or pre-eclampsia |
+| Robson group | `robson_gruppe` | As recorded (ten-group classification) |
+| Parity | `paritet` | 0, 1, ≥ 2 |
+| Previous caesarean section | `tidligere_sectio` | As recorded |
+| First vaginal delivery | `paritet`, `tidligere_sectio` | Nulliparous, or para 1 with a previous caesarean section (para ≥ 2 with a previous caesarean section counted as no: not derivable) |
+| Spontaneous onset of labour | `induksjon` | No induction (`induksjon` = 0) |
+| Induction of labour | `induksjon` | `induksjon` = 1 |
+| Gestational age | `gestasjonsalder_ved_fodsel_hele_uker`, `..._pluss_dager` | Weeks + days at birth |
+| Sex of the baby | `barnets_kjonn` | As recorded |
+| Birth weight | `fodselsvekt_gram` | g |
+| Birthweight percentile | `fodselsvekt_gram`, gestational age, sex of the baby | Percentile for gestational age and sex; reference standard to be decided (INTERGROWTH-21st proposed) |
+| Head circumference | `neonatal_hodeomkrets` | cm |
+| Amniotomy before 4 cm | `amniotomi`, `cervix_apning_amniotomi` | Amniotomy at ≤ 3 cm cervical dilatation |
+| Oxytocin started before 4 cm | `oxytocin_infusjon`, `cx_oppstart_oxytocin_infusjon` | Infusion started at ≤ 3 cm cervical dilatation |
+| Epidural started before 4 cm | `type_medikamentell_smertelindring.epidural`, `cx_start_eda` | Epidural started at ≤ 3 cm cervical dilatation |
+
+
+# References {#sec-references}
+
+<!-- CPT guidance (template text, not part of the SAP):
+See therapeutic libraries for key references to include.
+-->
+
+<!-- CPT guidance (template text, not part of the SAP):
+References to both internal and external documents and publications should be listed in
+alphabetical order. Do not reference internal reports in preparation.
+-->
+
+<!-- CPT guidance (template text, not part of the SAP):
+In the reference list, use the style and format published by the International Committee of
+Medical Journal Editors (ICMJE 2019). Citations to external documents and publications should be
+indicated in the text by citing the author and year within parentheses. For example, the in-text
+citation for the reference included would be (Hatcher 2007).
+-->
+
+\<Start of example text\>
+
+Hatcher RA, Trussell J, Nelson AL, Cates W Jr, Stewart F, Kowal D, eds. Contraceptive technology.
+19th edition. New York: Ardent Media, 2007(a): 24. Table 3-2.
+
+\<End of example text\>
+
+Andersen PK. Decomposition of number of life years lost according to causes of death. Stat Med.
+2013;32:5278–5285.
+
+Andersen PK, Keiding N. Interpretability and importance of functionals in competing risks and
+multistate models. Stat Med. 2012;31:1074–1088.
+
+Kenny A, Voldal EC, Xia F, Heagerty PJ, Hughes JP. Analysis of stepped wedge cluster randomized
+trials in the presence of a time-varying treatment effect. Stat Med. 2022;41:4311–4339.
+
+Young JG, Stensrud MJ, Tchetgen Tchetgen EJ, Hernán MA. A causal framework for classical statistical
+estimands in failure-time settings with competing events. Stat Med. 2020;39:1199–1236.
+
+Zhang J, Troendle JF, Yancey MK. Reassessing the labor curve in nulliparous women. Am J Obstet
+Gynecol. 2002;187:824–828.
+
+Zhang J, Landy HJ, Branch DW, et al. Contemporary patterns of spontaneous labor with normal neonatal
+outcomes. Obstet Gynecol. 2010;116:1281–1287.
